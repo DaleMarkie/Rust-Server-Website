@@ -1,173 +1,314 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
-const query = ref("");
-
-const placeholderTexts = [
-  "Search Google or type a URL",
-  "Vue.js tutorials",
-  "OpenAI ChatGPT",
-  "JavaScript tips"
-];
-
-let placeholderIndex = 0;
-let charIndex = 0;
-const placeholder = ref("");
-
-const typePlaceholder = () => {
-  if (charIndex <= placeholderTexts[placeholderIndex].length) {
-    placeholder.value = placeholderTexts[placeholderIndex].substring(0, charIndex);
-    charIndex++;
-    setTimeout(typePlaceholder, 100);
-  } else {
-    setTimeout(() => {
-      charIndex = 0;
-      placeholderIndex = (placeholderIndex + 1) % placeholderTexts.length;
-      typePlaceholder();
-    }, 1800);
-  }
+// Mock clan data
+const clan = {
+  name: "Red Rust Raiders",
+  tagline: "Survive. Raid. Dominate.",
+  bannerImg: "https://picsum.photos/seed/clanbanner/1600/400",
+  description: "We are the Red Rust Raiders, a PvP-focused Rust clan. Join us on epic raids and community events!",
+  discordLink: "#",
+  members: [
+    { name: "Alpha", role: "Leader", avatar: "https://i.pravatar.cc/150?img=1" },
+    { name: "Bravo", role: "Raider", avatar: "https://i.pravatar.cc/150?img=2" },
+    { name: "Charlie", role: "Support", avatar: "https://i.pravatar.cc/150?img=3" },
+    { name: "Delta", role: "Raider", avatar: "https://i.pravatar.cc/150?img=4" }
+  ],
+  events: [
+    { title: "Server Raid #23", date: "2026-03-25", link: "#" },
+    { title: "Clan Meetup", date: "2026-03-28", link: "#" }
+  ]
 };
-
-const search = () => {
-  if (query.value.trim() !== "") {
-    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query.value)}`;
-  }
-};
-
-onMounted(() => {
-  typePlaceholder();
-});
 </script>
 
 <template>
-  <div class="home">
-    <!-- Top nav fixed -->
-    <header class="top-nav">
-      <div class="nav-right">
-        <a href="https://mail.google.com" target="_blank">Gmail</a>
-        <a href="https://www.google.com/imghp" target="_blank">Images</a>
-        <div class="avatar">
-          <img src="https://www.google.com/images/branding/product/ico/googleg_lodp.ico" alt="Google Account"/>
+  <div class="clan-home">
+
+    <!-- Navigation -->
+    <nav class="top-nav">
+      <div class="nav-logo">{{ clan.name }}</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#members">Members</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a :href="clan.discordLink" class="discord-link">Discord</a></li>
+      </ul>
+    </nav>
+
+    <!-- Banner Section -->
+    <section class="banner-section">
+      <img :src="clan.bannerImg" alt="Clan Banner" class="banner-img" />
+      <div class="banner-content">
+        <h1>{{ clan.name }}</h1>
+        <p>{{ clan.tagline }}</p>
+        <a :href="clan.discordLink" class="discord-btn">Join our Discord</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <h2>About the Clan</h2>
+      <p>{{ clan.description }}</p>
+    </section>
+
+    <!-- Members Section -->
+    <section id="members" class="members-section">
+      <h2>Clan Members</h2>
+      <div class="members-grid">
+        <div v-for="member in clan.members" :key="member.name" class="member-card">
+          <div class="avatar-wrapper">
+            <img :src="member.avatar" :alt="member.name" />
+            <span class="status-dot online" title="Online"></span>
+          </div>
+          <h3>{{ member.name }}</h3>
+          <p :class="['role-badge', member.role.toLowerCase()]">{{ member.role }}</p>
+          <button class="view-profile-btn">View Profile</button>
         </div>
       </div>
-    </header>
+    </section>
 
-    <!-- Main content -->
-    <main class="content">
-      <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google" class="logo-img"/>
+    <!-- Events Section -->
+    <section id="events" class="events-section">
+      <h2>Upcoming Events</h2>
+      <ul>
+        <li v-for="event in clan.events" :key="event.title">
+          <strong>{{ event.title }}</strong> - {{ event.date }}
+          <a :href="event.link">Details</a>
+        </li>
+      </ul>
+    </section>
 
-      <div class="search-bar">
-        <input v-model="query" :placeholder="placeholder" @keyup.enter="search"/>
-        <span class="mic">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="#4285F4">
-            <path d="M12 14c1.654 0 3-1.346 3-3V5c0-1.654-1.346-3-3-3S9 3.346 9 5v6c0 1.654 1.346 3 3 3zm5-3c0 2.761-2.239 5-5 5s-5-2.239-5-5H7c0 3.309 2.691 6 6 6s6-2.691 6-6h-1z"/>
-          </svg>
-        </span>
-      </div>
+    <!-- Footer Section -->
+    <footer class="footer-section">
+      <p>© 2026 {{ clan.name }}. All rights reserved.</p>
+    </footer>
 
-      <div class="buttons">
-        <button @click="search">Google Search</button>
-        <button @click="() => window.location.href='https://www.google.com/doodles'">I'm Feeling Lucky</button>
-      </div>
-    </main>
   </div>
 </template>
 
 <style scoped>
-html, body, #app {
-  margin:0; padding:0; height:100%; width:100%; font-family:'Roboto', sans-serif; background:#fff; overflow:hidden;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+.clan-home {
+  font-family: 'Inter', sans-serif;
+  color: #eee;
+  background: #1b1b1b;
+  min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
-.home { position:relative; width:100%; height:100%; }
-
-/* TOP NAV FIXED AT TOP-RIGHT */
+/* Top Navigation */
 .top-nav {
-  position:fixed;
-  top:0; right:0; left:0;
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-  padding:12px 24px;
-  background:transparent; /* keeps it minimal like Google */
-  z-index:1000;
-}
-.nav-right {
-  display:flex;
-  align-items:center;
-}
-.nav-right a {
-  margin-left:16px;
-  font-size:14px;
-  color:#5f6368;
-  text-decoration:none;
-  transition:color 0.2s;
-}
-.nav-right a:hover { color:#202124; }
-.avatar {
-  margin-left:16px;
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  overflow:hidden;
-  cursor:pointer;
-}
-.avatar img { width:100%; height:100%; }
-
-/* MAIN CONTENT */
-.content {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
-  width:600px;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: rgba(27,27,27,0.95);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.logo-img { width:272px; margin-bottom:24px; }
-
-.search-bar {
-  display:flex;
-  align-items:center;
-  position:relative;
-  border:1px solid #dfe1e5;
-  border-radius:24px;
-  padding:0 12px;
-  height:44px;
-  box-shadow:0 1px 6px rgba(32,33,36,0.28);
-  background:#fff;
-  transition:box-shadow 0.2s, transform 0.2s;
+.nav-logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f05454;
 }
-.search-bar:hover { box-shadow:0 3px 12px rgba(32,33,36,0.3); transform:scale(1.01); }
-.search-bar input {
-  flex:1;
-  border:none;
-  outline:none;
-  font-size:16px;
-  padding:0 8px;
-  color:#202124;
-  background:#fff;
-}
-.search-bar input::placeholder { color:rgba(0,0,0,0.54); }
-.mic { position:absolute; right:12px; cursor:pointer; display:flex; align-items:center; }
 
-/* Buttons below search bar */
-.buttons { margin-top:24px; }
-.buttons button {
-  margin:0 4px;
-  padding:10px 20px;
-  font-size:14px;
-  background:#f8f9fa;
-  border:1px solid #f8f9fa;
-  border-radius:4px;
-  cursor:pointer;
-  transition:background 0.2s, box-shadow 0.2s;
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
 }
-.buttons button:hover { background:#f1f3f4; box-shadow:0 1px 1px rgba(0,0,0,0.1); }
 
-/* Responsive */
-@media (max-width:640px) {
-  .content { width:90%; }
-  .logo-img { width:200px; margin-bottom:16px; }
-  .buttons button { padding:8px 16px; font-size:13px; }
+.nav-links li a {
+  color: #eee;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+  color: #f05454;
+}
+
+.discord-link {
+  background: #7289da;
+  padding: 6px 14px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.discord-link:hover {
+  background: #5b6eae;
+}
+
+/* Banner Section */
+.banner-section {
+  position: relative;
+  text-align: center;
+  margin-top: -1px;
+}
+.banner-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  opacity: 0.8;
+}
+.banner-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.banner-content h1 {
+  font-size: 4rem;
+  color: #f05454;
+  margin-bottom: 10px;
+}
+.banner-content p {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.discord-btn {
+  padding: 12px 32px;
+  background: #7289da;
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.discord-btn:hover {
+  background: #5b6eae;
+}
+
+/* Sections */
+section {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+h2 {
+  font-size: 2.5rem;
+  color: #f05454;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Members Section */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.member-card {
+  background: rgba(30,30,30,0.9);
+  border-radius: 20px;
+  padding: 24px 16px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.member-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.7);
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar-wrapper img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+  border: 3px solid #f05454;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #1b1b1b;
+}
+
+.status-dot.online {
+  background: #4cd137;
+}
+
+.member-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+/* Role Colors */
+.role-badge.leader { background: #f05454; }
+.role-badge.raider { background: #f5a623; }
+.role-badge.support { background: #4fc1ff; }
+
+.view-profile-btn {
+  padding: 8px 16px;
+  background: #7289da;
+  color: #fff;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.view-profile-btn:hover {
+  background: #5b6eae;
+}
+/* Events Section */
+.events-section ul {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.events-section li {
+  background: rgba(30,30,30,0.8);
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+.events-section a {
+  color: #f05454;
+  text-decoration: none;
+  margin-left: 8px;
+}
+.events-section a:hover {
+  text-decoration: underline;
+}
+
+/* Footer Section */
+.footer-section {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 </style>
