@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import Footer from "./components/Footer.vue"; // import the new Footer component
 
 // Mock clan data
 const clan = {
@@ -17,7 +18,11 @@ const clan = {
   events: [
     { title: "Server Raid #23", date: "2026-03-25", link: "#" },
     { title: "Clan Meetup", date: "2026-03-28", link: "#" }
-  ]
+  ],
+  wipes: {
+    lastWipe: "2026-03-15",
+    nextWipe: "2026-04-01"
+  }
 };
 </script>
 
@@ -30,6 +35,7 @@ const clan = {
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#members">Members</a></li>
+        <li><a href="#wipes">Wipes</a></li>
         <li><a href="#events">Events</a></li>
         <li><a :href="clan.discordLink" class="discord-link">Discord</a></li>
       </ul>
@@ -67,6 +73,15 @@ const clan = {
       </div>
     </section>
 
+    <!-- Wipes Section -->
+    <section id="wipes" class="wipes-section">
+      <h2>Server Wipes</h2>
+      <div class="wipe-alert">
+        <p><strong>Last Wipe:</strong> {{ clan.wipes.lastWipe }}</p>
+        <p><strong>Next Wipe:</strong> {{ clan.wipes.nextWipe }}</p>
+      </div>
+    </section>
+
     <!-- Events Section -->
     <section id="events" class="events-section">
       <h2>Upcoming Events</h2>
@@ -78,10 +93,8 @@ const clan = {
       </ul>
     </section>
 
-    <!-- Footer Section -->
-    <footer class="footer-section">
-      <p>© 2026 {{ clan.name }}. All rights reserved.</p>
-    </footer>
+    <!-- Footer -->
+    <Footer :clanName="clan.name" />
 
   </div>
 </template>
@@ -149,7 +162,6 @@ const clan = {
 .banner-section {
   position: relative;
   text-align: center;
-  margin-top: -1px;
 }
 .banner-img {
   width: 100%;
@@ -282,6 +294,19 @@ h2 {
 .view-profile-btn:hover {
   background: #5b6eae;
 }
+
+/* Wipes Section */
+.wipes-section .wipe-alert {
+  background: rgba(245, 84, 84, 0.9);
+  padding: 20px 24px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #fff;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 /* Events Section */
 .events-section ul {
   list-style: none;
