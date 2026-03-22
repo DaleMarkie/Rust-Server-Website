@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Footer from "./components/Footer.vue"; // import the new Footer component
-
+import About from "./components/About.vue"; // import About component
+import Banner from "./components/Banner.vue"; // Import Banner component
+import Nav from "./components/Nav.vue";
+import Members from "./components/Members.vue";
+import Wipes from "./components/Wipes.vue";
+import Events from "./components/Events.vue";
 // Mock clan data
 const clan = {
   name: "Red Rust Raiders",
@@ -29,69 +34,28 @@ const clan = {
 <template>
   <div class="clan-home">
 
-    <!-- Navigation -->
-    <nav class="top-nav">
-      <div class="nav-logo">{{ clan.name }}</div>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#members">Members</a></li>
-        <li><a href="#wipes">Wipes</a></li>
-        <li><a href="#events">Events</a></li>
-        <li><a :href="clan.discordLink" class="discord-link">Discord</a></li>
-      </ul>
-    </nav>
+    <!-- Navigation (New Component) -->
+    <Nav :name="clan.name" :discordLink="clan.discordLink" />
 
-    <!-- Banner Section -->
-    <section class="banner-section">
-      <img :src="clan.bannerImg" alt="Clan Banner" class="banner-img" />
-      <div class="banner-content">
-        <h1>{{ clan.name }}</h1>
-        <p>{{ clan.tagline }}</p>
-        <a :href="clan.discordLink" class="discord-btn">Join our Discord</a>
-      </div>
-    </section>
+    <!-- Banner Section (New Component) -->
+    <Banner
+      :name="clan.name"
+      :tagline="clan.tagline"
+      :bannerImg="clan.bannerImg"
+      :discordLink="clan.discordLink"
+    />
 
-    <!-- About Section -->
-    <section id="about" class="about-section">
-      <h2>About the Clan</h2>
-      <p>{{ clan.description }}</p>
-    </section>
+    <!-- About Section (New Component) -->
+    <About :description="clan.description" />
+    
+    <!-- Members Section (New Component) -->
+    <Members :members="clan.members" />
 
-    <!-- Members Section -->
-    <section id="members" class="members-section">
-      <h2>Clan Members</h2>
-      <div class="members-grid">
-        <div v-for="member in clan.members" :key="member.name" class="member-card">
-          <div class="avatar-wrapper">
-            <img :src="member.avatar" :alt="member.name" />
-            <span class="status-dot online" title="Online"></span>
-          </div>
-          <h3>{{ member.name }}</h3>
-          <p :class="['role-badge', member.role.toLowerCase()]">{{ member.role }}</p>
-          <button class="view-profile-btn">View Profile</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Wipes Section -->
-    <section id="wipes" class="wipes-section">
-      <h2>Server Wipes</h2>
-      <div class="wipe-alert">
-        <p><strong>Last Wipe:</strong> {{ clan.wipes.lastWipe }}</p>
-        <p><strong>Next Wipe:</strong> {{ clan.wipes.nextWipe }}</p>
-      </div>
-    </section>
-
-    <!-- Events Section -->
-    <section id="events" class="events-section">
-      <h2>Upcoming Events</h2>
-      <ul>
-        <li v-for="event in clan.events" :key="event.title">
-          <strong>{{ event.title }}</strong> - {{ event.date }}
-          <a :href="event.link">Details</a>
-        </li>
-      </ul>
-    </section>
+    <!-- Wipes Section (New Component) -->
+    <Wipes :lastWipe="clan.wipes.lastWipe" :nextWipe="clan.wipes.nextWipe" />
+    
+   <!-- Events Section (New Component) -->
+   <Events :events="clan.events" />
 
     <!-- Footer -->
     <Footer :clanName="clan.name" />
