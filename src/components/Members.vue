@@ -10,16 +10,41 @@ defineProps<{
 
 <template>
   <section id="members" class="members-section">
-    <h2>Clan Members</h2>
-    <div class="members-grid">
-      <div v-for="member in members" :key="member.name" class="member-card">
-        <div class="avatar-wrapper" :class="member.role.toLowerCase()">
-          <img :src="member.avatar" :alt="member.name" />
-          <span class="status-dot online" title="Online"></span>
+    <!-- Background -->
+    <div class="bg"></div>
+    <div class="overlay"></div>
+    <div class="grain"></div>
+
+    <!-- Smoke -->
+    <div class="smoke smoke-1"></div>
+    <div class="smoke smoke-2"></div>
+
+    <!-- Content -->
+    <div class="content">
+      <h2>CLAN ROSTER</h2>
+      <div class="divider"></div>
+
+      <div class="members-grid">
+        <div v-for="member in members" :key="member.name" class="member-card">
+          
+          <!-- Avatar -->
+          <div class="avatar-wrapper" :class="member.role.toLowerCase()">
+            <img :src="member.avatar" :alt="member.name" />
+            <span class="status-dot"></span>
+          </div>
+
+          <!-- Info -->
+          <h3>{{ member.name }}</h3>
+          <p :class="['role-badge', member.role.toLowerCase()]">
+            {{ member.role }}
+          </p>
+
+          <!-- Button -->
+          <button class="view-profile-btn">
+            VIEW PROFILE
+          </button>
+
         </div>
-        <h3>{{ member.name }}</h3>
-        <p :class="['role-badge', member.role.toLowerCase()]">{{ member.role }}</p>
-        <button class="view-profile-btn">View Profile</button>
       </div>
     </div>
   </section>
@@ -27,127 +52,179 @@ defineProps<{
 
 <style scoped>
 .members-section {
-  padding: 60px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-  background: #1b1b1b url('https://images.unsplash.com/photo-1625723427391-164c022d6d3a?auto=format&fit=crop&w=1950&q=80') no-repeat center/cover;
-  border-top: 3px solid #f05454;
-  border-bottom: 3px solid #f05454;
+  position: relative;
+  width: 100%;
+  min-height: 550px; /* MATCHES OTHER SECTIONS */
+  padding: 80px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  color: #ddd;
 }
 
+/* Background */
+.bg {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  background: url('https://images.unsplash.com/photo-1625723427391-164c022d6d3a?auto=format&fit=crop&w=1950&q=80') center/cover;
+  filter: brightness(0.25) contrast(1.4);
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.95));
+}
+
+/* Grain */
+.grain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+  opacity: 0.25;
+}
+
+/* Smoke */
+.smoke {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.04), transparent);
+  animation: smokeMove 40s linear infinite;
+}
+
+.smoke-2 {
+  animation-duration: 60s;
+  opacity: 0.5;
+}
+
+@keyframes smokeMove {
+  from { transform: translate(-10%, -10%); }
+  to { transform: translate(10%, 10%); }
+}
+
+/* Content */
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+/* Title */
 .members-section h2 {
   font-size: 3rem;
-  color: #f05454;
-  margin-bottom: 40px;
-  text-shadow: 0 0 12px #f05454;
+  color: #d47a2a;
+  letter-spacing: 3px;
 }
 
+.divider {
+  width: 100px;
+  height: 3px;
+  background: #d47a2a;
+  margin: 20px auto 40px;
+}
+
+/* Grid */
 .members-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
-  justify-items: center;
+  gap: 25px;
 }
 
+/* Card */
 .member-card {
-  background: rgba(30, 30, 30, 0.85);
-  border-radius: 24px;
-  padding: 24px 16px 32px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid rgba(240, 84, 84, 0.4);
+  background: linear-gradient(145deg, #1c1c1c, #111);
+  border: 1px solid #2a2a2a;
+  padding: 20px;
+  transition: all 0.2s ease;
 }
 
 .member-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.7), 0 0 12px #f05454;
+  border-color: #d47a2a;
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(212,122,42,0.2);
 }
 
+/* Avatar */
 .avatar-wrapper {
   position: relative;
   display: inline-block;
-  border-radius: 50%;
-  padding: 4px;
-  transition: box-shadow 0.3s ease;
+  margin-bottom: 10px;
 }
 
 .avatar-wrapper img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 3px solid #f05454;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #333;
 }
 
+/* Role highlights (subtle, not neon) */
 .avatar-wrapper.leader img {
-  box-shadow: 0 0 12px #f05454;
+  border-color: #d47a2a;
 }
 
 .avatar-wrapper.raider img {
-  box-shadow: 0 0 12px #f5a623;
+  border-color: #b86b2c;
 }
 
 .avatar-wrapper.support img {
-  box-shadow: 0 0 12px #4fc1ff;
+  border-color: #666;
 }
 
+/* Status dot */
 .status-dot {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid #1b1b1b;
+  bottom: 5px;
+  right: 5px;
+  width: 10px;
+  height: 10px;
   background: #4cd137;
-  animation: pulse 1.5s infinite;
 }
 
-@keyframes pulse {
-  0% { transform: scale(0.9); opacity: 0.7; }
-  50% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0.7; }
-}
-
+/* Name */
 .member-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 6px;
+  margin: 10px 0 5px;
   color: #fff;
-  text-shadow: 0 0 6px rgba(0,0,0,0.5);
 }
 
+/* Role */
 .role-badge {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 14px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: #fff;
-  text-shadow: 0 0 4px rgba(0,0,0,0.5);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: #888;
+  margin-bottom: 10px;
 }
 
-/* Role Colors */
-.role-badge.leader { background: #f05454; }
-.role-badge.raider { background: #f5a623; }
-.role-badge.support { background: #4fc1ff; }
-
+/* Button */
 .view-profile-btn {
   padding: 10px 20px;
-  background: linear-gradient(145deg, #7289da, #5b6eae);
-  color: #fff;
-  border-radius: 14px;
-  border: none;
-  cursor: pointer;
+  background: transparent;
+  border: 1px solid #444;
+  color: #aaa;
   font-weight: 700;
-  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .view-profile-btn:hover {
-  transform: scale(1.05);
-  background: linear-gradient(145deg, #5b6eae, #7289da);
-  box-shadow: 0 0 16px rgba(114,137,218,0.7);
+  border-color: #d47a2a;
+  color: #d47a2a;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .members-section h2 {
+    font-size: 2rem;
+  }
 }
 </style>

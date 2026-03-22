@@ -7,6 +7,7 @@ import Nav from "./components/Nav.vue";
 import Members from "./components/Members.vue";
 import Wipes from "./components/Wipes.vue";
 import Events from "./components/Events.vue";
+
 // Mock clan data
 const clan = {
   name: "Red Rust Raiders",
@@ -66,10 +67,17 @@ const clan = {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
+/* ------------------ GLOBAL BACKGROUND ------------------ */
+body {
+  background: url('https://picsum.photos/seed/background/1920/1080') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* ---------- EXISTING CLAN HOME STYLES ---------- */
 .clan-home {
   font-family: 'Inter', sans-serif;
   color: #eee;
-  background: #1b1b1b;
+  /* Remove solid background to show body background */
   min-height: 100vh;
   scroll-behavior: smooth;
 }

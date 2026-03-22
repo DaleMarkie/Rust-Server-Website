@@ -7,17 +7,42 @@ defineProps<{
 
 <template>
   <section id="wipes" class="wipes-section">
-    <h2>Server Wipes</h2>
-    <div class="wipe-cards">
-      <div class="wipe-card">
-        <div class="wipe-icon">🗓️</div>
-        <p class="wipe-label">Last Wipe</p>
-        <p class="wipe-date">{{ lastWipe }}</p>
-      </div>
-      <div class="wipe-card next">
-        <div class="wipe-icon">⏳</div>
-        <p class="wipe-label">Next Wipe</p>
-        <p class="wipe-date">{{ nextWipe }}</p>
+    <!-- Background -->
+    <div class="bg"></div>
+    <div class="overlay"></div>
+    <div class="grain"></div>
+
+    <!-- Smoke -->
+    <div class="smoke smoke-1"></div>
+    <div class="smoke smoke-2"></div>
+
+    <!-- Content -->
+    <div class="content">
+      <h2>WIPE STATUS</h2>
+      <div class="divider"></div>
+
+      <div class="wipe-cards">
+
+        <!-- Last wipe -->
+        <div class="wipe-card">
+          <div class="wipe-header">
+            <span class="wipe-title">LAST WIPE</span>
+          </div>
+          <div class="wipe-body">
+            <p class="wipe-date">{{ lastWipe }}</p>
+          </div>
+        </div>
+
+        <!-- Next wipe -->
+        <div class="wipe-card highlight">
+          <div class="wipe-header">
+            <span class="wipe-title">NEXT WIPE</span>
+          </div>
+          <div class="wipe-body">
+            <p class="wipe-date">{{ nextWipe }}</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -25,70 +50,141 @@ defineProps<{
 
 <style scoped>
 .wipes-section {
-  padding: 60px 20px;
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  background: #1b1b1b url('https://images.unsplash.com/photo-1633130275702-5ec9f967dfff?auto=format&fit=crop&w=1950&q=80') no-repeat center/cover;
-  border-top: 3px solid #f05454;
-  border-bottom: 3px solid #f05454;
+  position: relative;
+  width: 100%;
+  min-height: 550px; /* MATCHES OTHER SECTIONS */
+  padding: 80px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  color: #ddd;
 }
 
+/* Background */
+.bg {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  background: url('https://images.unsplash.com/photo-1633130275702-5ec9f967dfff?auto=format&fit=crop&w=1950&q=80') center/cover;
+  filter: brightness(0.25) contrast(1.4);
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.95));
+}
+
+/* Grain */
+.grain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+  opacity: 0.25;
+}
+
+/* Smoke */
+.smoke {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.04), transparent);
+  animation: smokeMove 40s linear infinite;
+}
+
+.smoke-2 {
+  animation-duration: 60s;
+  opacity: 0.5;
+}
+
+@keyframes smokeMove {
+  from { transform: translate(-10%, -10%); }
+  to { transform: translate(10%, 10%); }
+}
+
+/* Content */
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+/* Title */
 .wipes-section h2 {
   font-size: 3rem;
-  color: #f05454;
-  margin-bottom: 40px;
-  text-shadow: 0 0 12px #f05454;
+  color: #d47a2a;
+  letter-spacing: 3px;
 }
 
+.divider {
+  width: 100px;
+  height: 3px;
+  background: #d47a2a;
+  margin: 20px auto 40px;
+}
+
+/* Cards */
 .wipe-cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 24px;
+  gap: 30px;
 }
 
 .wipe-card {
-  flex: 1 1 250px;
-  background: linear-gradient(145deg, rgba(245,84,84,0.9), rgba(240,60,60,0.8));
-  padding: 24px;
-  border-radius: 20px;
-  color: #fff;
-  position: relative;
-  box-shadow: 0 0 16px rgba(245,84,84,0.6), 0 8px 20px rgba(0,0,0,0.6);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+  flex: 1 1 280px;
+  max-width: 350px;
 
-.wipe-card.next {
-  background: linear-gradient(145deg, rgba(114,137,218,0.85), rgba(80,100,180,0.8));
-  box-shadow: 0 0 16px rgba(114,137,218,0.6), 0 8px 20px rgba(0,0,0,0.6);
+  background: linear-gradient(145deg, #1c1c1c, #111);
+  border: 1px solid #2a2a2a;
+
+  padding: 25px;
+  text-align: center;
+
+  transition: all 0.2s ease;
 }
 
 .wipe-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 32px rgba(245,84,84,0.9), 0 12px 36px rgba(0,0,0,0.8);
+  border-color: #d47a2a;
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(212,122,42,0.2);
 }
 
-.wipe-icon {
-  font-size: 2.5rem;
-  margin-bottom: 12px;
-  display: inline-block;
-  animation: glow 2s infinite alternate;
+/* Highlight next wipe */
+.wipe-card.highlight {
+  border-color: #d47a2a;
 }
 
-.wipe-label {
-  font-weight: 700;
-  font-size: 1.2rem;
-  margin-bottom: 6px;
+/* Header */
+.wipe-header {
+  margin-bottom: 10px;
 }
 
+.wipe-title {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: #777;
+}
+
+/* Body */
 .wipe-date {
   font-size: 1.4rem;
-  font-weight: 600;
+  color: #fff;
+  font-weight: bold;
 }
 
-@keyframes glow {
-  from { text-shadow: 0 0 8px rgba(255,255,255,0.5); }
-  to { text-shadow: 0 0 16px rgba(255,255,255,1); }
+/* Mobile */
+@media (max-width: 768px) {
+  .wipes-section h2 {
+    font-size: 2rem;
+  }
 }
 </style>

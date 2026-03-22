@@ -1,41 +1,59 @@
 <script setup lang="ts">
-// Description and rules are now directly inside the component
-const description = `Welcome to <strong>Red Rust Raiders</strong>! Survive, raid, and dominate in our PvP-focused Rust server. Join epic raids, build bases, and participate in events!`;
+const description = `Welcome to <strong>Red Rust Raiders</strong> — a brutal, no-hand-holding survival experience. Build, raid, dominate, and fight for control in a harsh world where only the strongest survive.`;
 
 const rules = [
-  "No cheating, exploiting, or using third-party hacks/aimbots.",
-  "No griefing or harassment of new players.",
-  "Raiding is allowed, but offline raiding is limited to server rules.",
-  "Respect all players and admins at all times.",
-  "Do not spam chat or advertise other servers.",
-  "Base building must follow server guidelines (no blocking spawn/roads).",
-  "Looting player corpses is allowed but do not threaten or troll repeatedly.",
-  "Abide by all event rules and announcements by admins.",
-  "Use voice/text chat responsibly; no harassment.",
-  "Admins have the final say; disputes should be handled respectfully."
+  "No cheating, exploiting, or using third-party hacks.",
+  "Respect new players — no excessive griefing.",
+  "Raiding is allowed — follow wipe & raid rules.",
+  "Respect admins — their word is final.",
+  "No spam or advertising.",
+  "No blocking monuments, roads, or spawns.",
+  "Looting is allowed — repeated harassment is not.",
+  "Follow event-specific rules.",
+  "No voice/chat abuse.",
+  "Play hard, but play fair."
 ];
 </script>
 
 <template>
   <section id="about" class="about-section">
+    <!-- Background -->
+    <div class="bg"></div>
     <div class="overlay"></div>
+    <div class="grain"></div>
 
-    <!-- Server Info -->
-    <div class="server-info">
-      <h2>About the Server</h2>
-      <div class="underline"></div>
-      <p v-html="description"></p>
-    </div>
+    <!-- Smoke -->
+    <div class="smoke smoke-1"></div>
+    <div class="smoke smoke-2"></div>
 
-    <!-- Server Rules -->
-    <div class="server-rules">
-      <h3>Server Rules</h3>
-      <div class="rules-grid">
-        <div v-for="(rule, index) in rules" :key="index" class="rule-card">
-          <div class="rule-number">#{{ index + 1 }}</div>
-          <p>{{ rule }}</p>
+    <!-- Content -->
+    <div class="content">
+
+      <!-- About -->
+      <div class="server-info">
+        <h2>SERVER BRIEFING</h2>
+        <div class="divider"></div>
+        <p v-html="description"></p>
+      </div>
+
+      <!-- Rules -->
+      <div class="server-rules">
+        <h3>RULES & PROTOCOL</h3>
+
+        <div class="rules-grid">
+          <div v-for="(rule, index) in rules" :key="index" class="rule-card">
+            <div class="rule-header">
+              <span class="rule-number">{{ index + 1 }}</span>
+              <span class="rule-title">RULE</span>
+            </div>
+
+            <div class="rule-body">
+              <p>{{ rule }}</p>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </section>
 </template>
@@ -43,123 +61,162 @@ const rules = [
 <style scoped>
 .about-section {
   position: relative;
+  width: 100%;
+  min-height: 550px; /* MATCHES BANNER */
   padding: 80px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-  background: #1b1b1b url('https://images.unsplash.com/photo-1625715043082-0e3fa932ad15?auto=format&fit=crop&w=1950&q=80') no-repeat center/cover;
-  border-top: 3px solid #f05454;
-  border-bottom: 3px solid #f05454;
-  color: #eee;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ddd;
   overflow: hidden;
 }
 
-.overlay {
+/* Background */
+.bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(27, 27, 27, 0.75);
-  z-index: 0;
+  width: 110%;
+  height: 110%;
+  background: url('https://images.unsplash.com/photo-1625715043082-0e3fa932ad15?auto=format&fit=crop&w=1950&q=80') center/cover;
+  filter: brightness(0.25) contrast(1.4);
 }
 
-/* Server Info */
-.server-info {
+/* Overlay */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.95));
+}
+
+/* Grain */
+.grain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+  opacity: 0.25;
+}
+
+/* Smoke */
+.smoke {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.04), transparent);
+  animation: smokeMove 40s linear infinite;
+}
+
+.smoke-2 {
+  animation-duration: 60s;
+  opacity: 0.5;
+}
+
+@keyframes smokeMove {
+  from { transform: translate(-10%, -10%); }
+  to { transform: translate(10%, 10%); }
+}
+
+/* Content wrapper (FIXED WIDTH LIKE YOUR ORIGINAL) */
+.content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* About */
+.server-info {
+  text-align: center;
   margin-bottom: 60px;
 }
 
 .server-info h2 {
   font-size: 3rem;
-  color: #f05454;
-  margin-bottom: 16px;
-  text-shadow: 0 0 14px #f05454;
+  color: #d47a2a;
+  letter-spacing: 3px;
 }
 
-.underline {
-  width: 80px;
-  height: 4px;
-  background: #f05454;
-  margin: 0 auto 30px auto;
-  border-radius: 2px;
-  box-shadow: 0 0 14px #f05454;
-  animation: pulse 2s infinite alternate;
+.divider {
+  width: 100px;
+  height: 3px;
+  background: #d47a2a;
+  margin: 20px auto;
 }
 
 .server-info p {
-  font-size: 1.25rem;
-  color: #eee;
-  max-width: 850px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: auto;
   line-height: 1.8;
-  text-shadow: 0 0 6px rgba(0,0,0,0.5);
+  color: #bbb;
 }
 
-.server-info p strong {
-  color: #f5a623;
-  text-shadow: 0 0 8px rgba(245,166,35,0.7);
+.server-info strong {
+  color: #fff;
 }
 
-/* Server Rules */
-.server-rules {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-}
-
+/* Rules */
 .server-rules h3 {
-  font-size: 2.5rem;
-  color: #4fc1ff;
+  text-align: center;
+  font-size: 2.2rem;
   margin-bottom: 30px;
-  text-shadow: 0 0 12px #4fc1ff;
+  color: #d47a2a;
 }
 
+/* GRID */
 .rules-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
+/* Rule card */
 .rule-card {
-  background: rgba(30, 30, 30, 0.85);
-  padding: 20px 16px;
-  border-radius: 20px;
-  position: relative;
-  border: 1px solid rgba(80, 193, 255, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(145deg, #1c1c1c, #111);
+  border: 1px solid #2a2a2a;
+  padding: 18px;
+  transition: all 0.2s ease;
 }
 
 .rule-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 0 28px rgba(80,193,255,0.7), 0 10px 24px rgba(0,0,0,0.6);
+  border-color: #d47a2a;
+  transform: translateY(-4px);
+  box-shadow: 0 0 15px rgba(212,122,42,0.2);
+}
+
+/* Header */
+.rule-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .rule-number {
-  position: absolute;
-  top: -12px;
-  left: -12px;
-  background: #f05454;
-  color: #fff;
-  font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(240,84,84,0.7);
+  background: #d47a2a;
+  color: #111;
+  padding: 4px 10px;
+  font-weight: bold;
 }
 
-.rule-card p {
+.rule-title {
+  font-size: 0.75rem;
+  color: #777;
+  letter-spacing: 2px;
+}
+
+/* Text */
+.rule-body p {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.6;
-  text-align: left;
-  color: #eee;
+  font-size: 0.95rem;
+  color: #ccc;
 }
 
-/* Animations */
-@keyframes pulse {
-  0% { box-shadow: 0 0 14px #f05454; }
-  50% { box-shadow: 0 0 28px #f05454; }
-  100% { box-shadow: 0 0 14px #f05454; }
+/* Mobile */
+@media (max-width: 768px) {
+  .server-info h2 {
+    font-size: 2rem;
+  }
 }
 </style>
