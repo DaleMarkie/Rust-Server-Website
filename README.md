@@ -5,6 +5,7 @@ Designed specifically for **server owners**, not generic users — focused on co
 
 ---
 ![Preview](https://i.ibb.co/NdHC2pwX/Screenshot-2026-03-23-11-14-35.png)
+![Preview](https://i.ibb.co/NdHC2pwX/Screenshot-2026-03-23-11-14-35.png](https://i.ibb.co/q36B66Gp/Screenshot-2026-03-23-12-04-45.png)
 
 ## 🔥 Features
 
