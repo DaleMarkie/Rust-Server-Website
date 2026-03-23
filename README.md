@@ -1,4 +1,4 @@
-# 🛢️ Rust Server Website (Vue 3 + TypeScript + Vite)
+# 🛢️ Rust Server Website (Vue 3 + TypeScript + Vite) https://discord.gg/tBNMaaV8EX
 
 A fully custom **Rust-style server website** built with Vue 3, TypeScript, and Vite.
 Designed specifically for **server owners**, not generic users — focused on control, clarity, and a cinematic game-style UI.
