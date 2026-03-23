@@ -6,6 +6,13 @@ defineProps<{
     avatar: string;
   }[];
 }>();
+
+const sectionDescription = `
+Meet the core team behind our server. Each member is dedicated to 
+keeping the community thriving, from leading raids and moderating chats 
+to providing top-tier support. Together, they ensure every player has 
+an unforgettable experience.
+`;
 </script>
 
 <template>
@@ -21,8 +28,9 @@ defineProps<{
 
     <!-- Content -->
     <div class="content">
-      <h2>CLAN ROSTER</h2>
+      <h2>Our Team</h2>
       <div class="divider"></div>
+      <p class="section-description" v-html="sectionDescription"></p>
 
       <div class="members-grid">
         <div v-for="member in members" :key="member.name" class="member-card">
@@ -54,13 +62,11 @@ defineProps<{
 .members-section {
   position: relative;
   width: 100%;
-  min-height: 550px; /* MATCHES OTHER SECTIONS */
+  min-height: 550px;
   padding: 80px 20px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   overflow: hidden;
   color: #ddd;
 }
@@ -126,6 +132,17 @@ defineProps<{
   letter-spacing: 3px;
 }
 
+/* Section description */
+.section-description {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  color: #ccc;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* Divider */
 .divider {
   width: 100px;
   height: 3px;
@@ -167,7 +184,7 @@ defineProps<{
   border: 2px solid #333;
 }
 
-/* Role highlights (subtle, not neon) */
+/* Role highlights */
 .avatar-wrapper.leader img {
   border-color: #d47a2a;
 }

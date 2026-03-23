@@ -3,16 +3,22 @@ defineProps<{
   lastWipe: string;
   nextWipe: string;
 }>();
+
+const description = `
+Stay ahead of the game! Our server wipes keep the world fresh, fair, and competitive.
+Plan your raids, rebuild your base, and dominate the map after every wipe. 
+Knowing the last and next wipe helps you strategize and stay on top!
+`;
 </script>
 
 <template>
   <section id="wipes" class="wipes-section">
-    <!-- Background -->
+    <!-- Background layers -->
     <div class="bg"></div>
     <div class="overlay"></div>
     <div class="grain"></div>
 
-    <!-- Smoke -->
+    <!-- Smoke animations -->
     <div class="smoke smoke-1"></div>
     <div class="smoke smoke-2"></div>
 
@@ -21,9 +27,10 @@ defineProps<{
       <h2>WIPE STATUS</h2>
       <div class="divider"></div>
 
-      <div class="wipe-cards">
+      <p class="description" v-html="description"></p>
 
-        <!-- Last wipe -->
+      <div class="wipe-cards">
+        <!-- Last Wipe -->
         <div class="wipe-card">
           <div class="wipe-header">
             <span class="wipe-title">LAST WIPE</span>
@@ -33,7 +40,7 @@ defineProps<{
           </div>
         </div>
 
-        <!-- Next wipe -->
+        <!-- Next Wipe -->
         <div class="wipe-card highlight">
           <div class="wipe-header">
             <span class="wipe-title">NEXT WIPE</span>
@@ -42,7 +49,6 @@ defineProps<{
             <p class="wipe-date">{{ nextWipe }}</p>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -52,18 +58,16 @@ defineProps<{
 .wipes-section {
   position: relative;
   width: 100%;
-  min-height: 550px; /* MATCHES OTHER SECTIONS */
+  min-height: 550px;
   padding: 80px 20px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   overflow: hidden;
   color: #ddd;
 }
 
-/* Background */
+/* Background layers */
 .bg {
   position: absolute;
   width: 110%;
@@ -71,16 +75,12 @@ defineProps<{
   background: url('https://images.unsplash.com/photo-1633130275702-5ec9f967dfff?auto=format&fit=crop&w=1950&q=80') center/cover;
   filter: brightness(0.25) contrast(1.4);
 }
-
-/* Overlay */
 .overlay {
   position: absolute;
   width: 100%;
   height: 100%;
   background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.95));
 }
-
-/* Grain */
 .grain {
   position: absolute;
   width: 100%;
@@ -89,7 +89,7 @@ defineProps<{
   opacity: 0.25;
 }
 
-/* Smoke */
+/* Smoke animation */
 .smoke {
   position: absolute;
   width: 200%;
@@ -97,18 +97,16 @@ defineProps<{
   background: radial-gradient(circle, rgba(255,255,255,0.04), transparent);
   animation: smokeMove 40s linear infinite;
 }
-
 .smoke-2 {
   animation-duration: 60s;
   opacity: 0.5;
 }
-
 @keyframes smokeMove {
   from { transform: translate(-10%, -10%); }
   to { transform: translate(10%, 10%); }
 }
 
-/* Content */
+/* Content wrapper */
 .content {
   position: relative;
   z-index: 2;
@@ -117,21 +115,27 @@ defineProps<{
   text-align: center;
 }
 
-/* Title */
+/* Title and description */
 .wipes-section h2 {
   font-size: 3rem;
   color: #d47a2a;
   letter-spacing: 3px;
 }
-
 .divider {
   width: 100px;
   height: 3px;
   background: #d47a2a;
-  margin: 20px auto 40px;
+  margin: 20px auto 20px;
+}
+.description {
+  max-width: 850px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+  color: #ccc;
+  font-size: 1.2rem;
 }
 
-/* Cards */
+/* Cards layout */
 .wipe-cards {
   display: flex;
   flex-wrap: wrap;
@@ -142,39 +146,33 @@ defineProps<{
 .wipe-card {
   flex: 1 1 280px;
   max-width: 350px;
-
   background: linear-gradient(145deg, #1c1c1c, #111);
   border: 1px solid #2a2a2a;
-
   padding: 25px;
   text-align: center;
-
   transition: all 0.2s ease;
 }
-
 .wipe-card:hover {
   border-color: #d47a2a;
   transform: translateY(-4px);
   box-shadow: 0 0 20px rgba(212,122,42,0.2);
 }
-
-/* Highlight next wipe */
 .wipe-card.highlight {
   border-color: #d47a2a;
 }
 
-/* Header */
+/* Card header */
 .wipe-header {
   margin-bottom: 10px;
 }
-
 .wipe-title {
   font-size: 0.8rem;
   letter-spacing: 2px;
   color: #777;
+  font-weight: 700;
 }
 
-/* Body */
+/* Card body */
 .wipe-date {
   font-size: 1.4rem;
   color: #fff;
@@ -183,8 +181,7 @@ defineProps<{
 
 /* Mobile */
 @media (max-width: 768px) {
-  .wipes-section h2 {
-    font-size: 2rem;
-  }
+  .wipes-section h2 { font-size: 2rem; }
+  .description { font-size: 1rem; }
 }
 </style>
