@@ -7,6 +7,7 @@ import Nav from "./components/Nav.vue";
 import Members from "./components/Members.vue";
 import Wipes from "./components/Wipes.vue";
 import Events from "./components/Events.vue";
+import Faq from "./components/Faq.vue";
 
 // Clan Data
 const clan = {
@@ -51,6 +52,8 @@ const clan = {
 
     <Events :events="clan.events" />
 
+    <Faq :clanName="clan.name" />
+
     <Footer :clanName="clan.name" />
   </div>
 </template>
@@ -61,7 +64,7 @@ const clan = {
 body {
   font-family: 'Roboto', sans-serif;
   background: url('https://wallpapers.com/images/high/rust-game-iuw5qm29ai120goe.webp') center/cover no-repeat fixed;
-  color: #ffffff;
+  color: #f80000;
 }
 
 /* Banner */
@@ -92,7 +95,7 @@ body {
 }
 .banner-content p {
   font-size: 1.5rem;
-  color: #fff;
+  color: #ff0303;
   margin: 12px 0 20px;
 }
 .discord-btn {
