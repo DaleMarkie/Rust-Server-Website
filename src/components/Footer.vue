@@ -5,6 +5,7 @@ defineProps<{ clanName: string }>();
 <template>
   <footer class="footer-section">
     <p>© 2026 {{ clanName }}. All rights reserved.</p>
+
     <div class="social-icons">
       <!-- Discord -->
       <a href="#" target="_blank" aria-label="Discord" class="discord">
@@ -12,12 +13,14 @@ defineProps<{ clanName: string }>();
           <path d="M104.4 0C46.7 0 0 46.7 0 104.4s46.7 104.4 104.4 104.4c57.7 0 104.4-46.7 104.4-104.4S162.1 0 104.4 0zm43.3 160c-5.5 0-10-5-10-10 0-5 4.5-10 10-10s10 5 10 10c0 5-4.5 10-10 10zm-86.6 0c-5.5 0-10-5-10-10 0-5 4.5-10 10-10s10 5 10 10c0 5-4.5 10-10 10z"/>
         </svg>
       </a>
+
       <!-- Twitter -->
       <a href="#" target="_blank" aria-label="Twitter" class="twitter">
         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
           <path d="M24 4.6c-.9.4-1.8.6-2.8.8 1-.6 1.7-1.5 2-2.6-.9.6-2 .9-3.1 1.1-.9-.9-2.2-1.4-3.6-1.4-2.7 0-4.8 2.2-4.8 4.8 0 .4 0 .8.1 1.2C7.7 8 4.1 6 1.7 3.2c-.5.9-.8 1.9-.8 3 0 2 1 3.8 2.5 4.8-.9 0-1.8-.3-2.6-.7v.1c0 2.8 2 5.1 4.7 5.6-.5.1-1 .2-1.5.2-.4 0-.8 0-1.2-.1.8 2.5 3.2 4.4 6 4.5-2.2 1.7-5 2.7-8 2.7-.5 0-1 0-1.5-.1 2.8 1.8 6.1 2.8 9.7 2.8 11.7 0 18.1-9.7 18.1-18.1 0-.3 0-.5 0-.8 1.2-.9 2.2-2.1 3-3.4z"/>
         </svg>
       </a>
+
       <!-- YouTube -->
       <a href="#" target="_blank" aria-label="YouTube" class="youtube">
         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -25,6 +28,17 @@ defineProps<{ clanName: string }>();
         </svg>
       </a>
     </div>
+
+    <!-- Credit Line -->
+    <p class="credit">
+      Developed By 
+      <a 
+        href="https://github.com/DaleMarkie/Rust-Server-Website/blob/main/README.md?plain=1" 
+        target="_blank"
+      >
+        MarkieWebworks &lt;3
+      </a>
+    </p>
   </footer>
 </template>
 
@@ -50,12 +64,28 @@ defineProps<{ clanName: string }>();
 
 /* Brand Colors on Hover */
 .social-icons a.discord:hover {
-  color: #7289da; /* Discord blue */
+  color: #7289da;
 }
 .social-icons a.twitter:hover {
-  color: #1da1f2; /* Twitter blue */
+  color: #1da1f2;
 }
 .social-icons a.youtube:hover {
-  color: #ff0000; /* YouTube red */
+  color: #ff0000;
+}
+
+/* Credit styling */
+.credit {
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.credit a {
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.credit a:hover {
+  color: #fff;
 }
 </style>

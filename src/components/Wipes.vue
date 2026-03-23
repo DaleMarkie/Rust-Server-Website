@@ -66,7 +66,7 @@ Knowing the last and next wipe helps you strategize and stay on top!
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  color: #ddd;
+  color: #ffffff;
 }
 
 /* Background layers */

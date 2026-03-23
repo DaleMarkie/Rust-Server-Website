@@ -36,7 +36,7 @@ const toggleServerPopup = () => showServerPopup.value = !showServerPopup.value;
 .top-nav {
   position: sticky;
   top: 0;
-  width: 92%;
+  width: 98%;
   background: rgba(27,27,27,0.95);
   display: flex;
   justify-content: space-between;

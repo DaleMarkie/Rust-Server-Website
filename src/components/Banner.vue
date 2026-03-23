@@ -58,6 +58,10 @@ const discordLink = "#";
           <span class="label">MAP</span>
           <span class="value">PROCEDURAL</span>
         </div>
+        <div class="stat">
+          <span class="label">Mods?</span>
+          <span class="value">150+</span>
+        </div>
       </div>
     </div>
 

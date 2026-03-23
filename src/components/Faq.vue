@@ -1,50 +1,82 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-// Props can be added later if you want dynamic FAQ data
+// FAQ Data
 const faqs = ref([
-  {
-    question: "How do I join the server?",
-    answer: "Simply click the 'JOIN DISCORD' button, follow our instructions, and connect using the in-game console with the server IP.",
-    open: false
-  },
-  {
-    question: "What is the server wipe schedule?",
-    answer: "Our server wipes every 2 weeks to keep the gameplay fresh and fair for all players.",
-    open: false
-  },
-  {
-    question: "Can I join as a solo player or only as a clan?",
-    answer: "Both solo players and clans are welcome! We encourage team play but respect solo survivalists.",
-    open: false
-  },
-  {
-    question: "Are there any rules for raiding?",
-    answer: "Yes, raiding is allowed, but griefing, exploiting, or cheating will result in a ban. Play fair!",
-    open: false
-  }
+  { question: "How do I join the server?", answer: "Open Rust, press F1, type `connect 123.456.789.0:28015` and press Enter.", category: "Server", open: false },
+  { question: "When is the next wipe?", answer: "Next wipe is scheduled for 2026-04-01.", category: "Wipes", open: false },
+  { question: "How do I become an admin?", answer: "Admins are chosen by the owner based on activity and contribution.", category: "Staff", open: false },
+  { question: "Where can I report bugs?", answer: "Report bugs in our Discord support channel.", category: "Support", open: false },
+  { question: "Are raids allowed?", answer: "PvP raids are allowed according to server rules.", category: "Gameplay", open: false },
+  { question: "How do I claim a base?", answer: "Use authorized tools and follow server claiming rules.", category: "Gameplay", open: false },
+  { question: "What are the server rules?", answer: "No cheating, griefing, or exploiting. Full rules are on Discord.", category: "Rules", open: false },
+  { question: "How can I contact support?", answer: "Use the Discord support channel or ping the support role.", category: "Support", open: false }
 ]);
+
+const categories = ["All", "Server", "Wipes", "Staff", "Support", "Gameplay", "Rules"];
+const activeCategory = ref("All");
+const searchQuery = ref("");
+
+const setCategory = (cat: string) => {
+  activeCategory.value = cat;
+};
 
 const toggleFaq = (index: number) => {
   faqs.value[index].open = !faqs.value[index].open;
 };
+
+const filteredFaqs = computed(() => {
+  return faqs.value.filter(faq => {
+    const matchesCategory = activeCategory.value === "All" || faq.category === activeCategory.value;
+    const matchesSearch = faq.question.toLowerCase().includes(searchQuery.value.toLowerCase()) || faq.answer.toLowerCase().includes(searchQuery.value.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+});
 </script>
 
 <template>
   <section id="faq" class="faq-section">
     <h2>Frequently Asked Questions</h2>
+    <p class="faq-description">
+      Got questions about our Rust server? From joining the server, understanding wipes, to gameplay tips and rules, we've got you covered. 
+      Use the filters or search to quickly find what you need and stay ahead in the world of Rust!
+    </p>
     <div class="divider"></div>
 
+    <!-- Category Filters -->
+    <div class="faq-filters">
+      <button
+        v-for="cat in categories"
+        :key="cat"
+        :class="['filter-btn', { active: activeCategory === cat }]"
+        @click="setCategory(cat)"
+      >
+        {{ cat }}
+      </button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="faq-search">
+      <input
+        type="text"
+        v-model="searchQuery"
+        placeholder="Search questions..."
+      />
+    </div>
+
+    <!-- FAQ List -->
     <div class="faq-list">
-      <div v-for="(faq, index) in faqs" :key="index" class="faq-item">
+      <div v-for="(faq, index) in filteredFaqs" :key="index" class="faq-item">
         <div class="faq-question" @click="toggleFaq(index)">
           <span>{{ faq.question }}</span>
           <span class="toggle-icon">{{ faq.open ? "-" : "+" }}</span>
         </div>
         <div v-if="faq.open" class="faq-answer">
           <p>{{ faq.answer }}</p>
+          <span class="category-tag">{{ faq.category }}</span>
         </div>
       </div>
+      <p v-if="filteredFaqs.length === 0" class="no-results">No FAQs match your search.</p>
     </div>
   </section>
 </template>
@@ -52,90 +84,121 @@ const toggleFaq = (index: number) => {
 <style scoped>
 .faq-section {
   padding: 60px 20px;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
   color: #eee;
   font-family: 'Roboto', sans-serif;
-  background: url('https://wallpapers.com/images/high/rust-game-iuw5qm29ai120goe.webp') center/cover no-repeat fixed;
   position: relative;
 }
 
-.faq-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 0;
-}
-
-.faq-section h2 {
-  font-size: 3rem;
+/* Title & Description */
+h2 {
+  font-size: 2.8rem;
+  text-align: center;
   color: #f05454;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 12px;
+}
+.faq-description {
+  max-width: 800px;
+  margin: 0 auto 30px;
+  font-size: 1.1rem;
+  color: #ccc;
+  text-align: center;
+  line-height: 1.6;
 }
 
+/* Divider */
 .divider {
   width: 120px;
   height: 3px;
-  background: #f05454;
-  margin: 20px auto 40px;
-  position: relative;
-  z-index: 1;
+  background: #d47a2a;
+  margin: 20px auto 30px;
 }
 
-.faq-list {
-  position: relative;
-  z-index: 1;
+/* Filters */
+.faq-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
 }
-
-.faq-item {
-  background: rgba(28,28,28,0.9);
+.filter-btn {
+  padding: 8px 16px;
+  background: #1c1c1c;
   border: 1px solid #2a2a2a;
   border-radius: 12px;
-  margin-bottom: 16px;
-  overflow: hidden;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  color: #ccc;
+  transition: 0.3s;
+}
+.filter-btn.active, .filter-btn:hover {
+  background: #d47a2a;
+  color: #111;
 }
 
+/* Search */
+.faq-search {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.faq-search input {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid #555;
+  background: #1c1c1c;
+  color: #eee;
+  width: 300px;
+  max-width: 100%;
+}
+
+/* FAQ Items */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.faq-item {
+  background: #1c1c1c;
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 1px solid #2a2a2a;
+  transition: 0.3s;
+}
+.faq-item:hover {
+  border-color: #d47a2a;
+}
 .faq-question {
-  padding: 18px 24px;
-  font-weight: 600;
-  font-size: 1.2rem;
   display: flex;
   justify-content: space-between;
+  font-weight: 600;
   cursor: pointer;
-  background: linear-gradient(145deg,#1c1c1c,#111);
 }
-
-.faq-question:hover {
-  background: linear-gradient(145deg,#2a2a2a,#161616);
-}
-
-.toggle-icon {
-  font-weight: bold;
-  font-size: 1.3rem;
-  color: #f05454;
-}
-
 .faq-answer {
-  padding: 16px 24px;
-  background: rgba(28,28,28,0.85);
-  font-size: 1rem;
+  margin-top: 10px;
   color: #ccc;
-  line-height: 1.6;
-  animation: fadeIn 0.3s ease forwards;
+}
+.category-tag {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: #fff;
+  background: #d47a2a;
+  padding: 2px 8px;
+  border-radius: 8px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+/* No results */
+.no-results {
+  text-align: center;
+  color: #ff5e5e;
+  margin-top: 20px;
 }
 
+/* Mobile */
 @media (max-width: 768px) {
-  .faq-section h2 { font-size: 2rem; }
-  .faq-question { font-size: 1rem; }
-  .faq-answer { font-size: 0.95rem; }
+  h2 { font-size: 2rem; }
+  .faq-description { font-size: 1rem; }
+  .filter-btn { padding: 6px 12px; }
 }
 </style>
