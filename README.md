@@ -4,6 +4,7 @@ A fully custom **Rust-style server website** built with Vue 3, TypeScript, and V
 Designed specifically for **server owners**, not generic users — focused on control, clarity, and a cinematic game-style UI.
 
 ---
+![Preview](https://i.ibb.co/NdHC2pwX/Screenshot-2026-03-23-11-14-35.png)
 
 ## 🔥 Features
 
