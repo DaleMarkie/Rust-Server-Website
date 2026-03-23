@@ -1,12 +1,61 @@
 <script setup lang="ts">
-defineProps<{
-  events: {
-    title: string;
-    date: string; // ISO date string e.g. "2026-04-01"
-    link: string;
-    description: string;
-  }[];
-}>();
+// Full event list with Rust-inspired descriptions
+const events = [
+  {
+    title: "Wipe Day: Fresh Start",
+    date: "2026-04-01",
+    link: "/events/wipe-day",
+    description: "The server resets. All resources are fresh, bases wiped. Gather, craft, and stake your claim before rivals do. The war for territory begins now."
+  },
+  {
+    title: "Airdrop Madness",
+    date: "2026-04-05",
+    link: "/events/airdrop-madness",
+    description: "A mysterious supply plane scatters high-tier loot across the map. Beware: other survivors are hunting the same prizes. Fight, flee, or snipe from a distance."
+  },
+  {
+    title: "Raiders on the Move",
+    date: "2026-04-10",
+    link: "/events/raider-invasion",
+    description: "A notorious raider clan is moving through the territory. Expect heavy PvP and unexpected assaults on bases. Prepare defenses or ambush them first."
+  },
+  {
+    title: "Radiation Storm",
+    date: "2026-04-12",
+    link: "/events/radiation-storm",
+    description: "A sudden spike in radiation hits the outskirts. Protective gear is mandatory. Loot radioactive zones for rare crafting components—risk vs reward is real."
+  },
+  {
+    title: "Supply Run Challenge",
+    date: "2026-04-15",
+    link: "/events/supply-run",
+    description: "Teams compete to secure the most resources in limited time. PvP allowed. Only the fastest and strongest survive. Gather, defend, and dominate the leaderboards."
+  },
+  {
+    title: "Helicopter Hunt",
+    date: "2026-04-18",
+    link: "/events/helicopter-hunt",
+    description: "A patrol helicopter spawns over high-risk zones. Take it down to claim explosive loot—but the alarm draws everyone’s attention. Strategy, skill, and timing are everything."
+  },
+  {
+    title: "Night of the Wiped",
+    date: "2026-04-22",
+    link: "/events/night-of-wiped",
+    description: "The server plunges into darkness. Night vision or torchlight is your only ally. Expect ambushes, stealth raids, and survival horror-style encounters as you fight for every scrap."
+  },
+  {
+    title: "Elite Loot Cache",
+    date: "2026-04-25",
+    link: "/events/elite-loot",
+    description: "Rare crates spawn randomly across the map. The contents are legendary—but only those with speed and cunning will claim them. PvP chaos guaranteed."
+  },
+  {
+    title: "Final Wipe Countdown",
+    date: "2026-04-30",
+    link: "/events/final-wipe",
+    description: "The end of the season approaches. Fortify, loot, and raid like there’s no tomorrow. The final push for dominance is here—who will rise, and who will fall?"
+  }
+];
 
 // Function to calculate days left
 const daysLeft = (eventDate: string) => {
@@ -17,8 +66,8 @@ const daysLeft = (eventDate: string) => {
 };
 
 const sectionDescription = `
-Never miss an event! Stay updated on raids, wipe events, and community challenges. 
-Prepare your gear, team up, and dominate the server together.
+Never miss an event! Stay updated on raids, wipe events, airdrops, and deadly radiation storms. 
+Prepare your gear, team up, and dominate the server together. Rust never sleeps. 
 `;
 </script>
 

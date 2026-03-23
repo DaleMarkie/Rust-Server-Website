@@ -136,7 +136,7 @@ an unforgettable experience.
 .section-description {
   max-width: 800px;
   margin: 0 auto 40px;
-  color: #ccc;
+  color: #ffffff;
   font-size: 1.1rem;
   line-height: 1.7;
   text-align: center;
