@@ -1,14 +1,23 @@
 # 🛢️ Rust Server Website (Vue 3 + TypeScript + Vite)
 
 A fully custom **Rust-style server website** built with Vue 3, TypeScript, and Vite.
-Designed specifically for **server owners**, not generic users — focused on control, clarity, and a cinematic game-style UI.https://i.ibb.co/q36B66Gp/Screenshot-2026-03-23-12-04-45.png
+Designed specifically for **server owners**, not generic users — focused on control, clarity, and a cinematic game-style UI.
 
 ---
 ![Preview](https://i.ibb.co/NdHC2pwX/Screenshot-2026-03-23-11-14-35.png)
 ![Preview](https://i.ibb.co/CpnfnbxD/Screenshot-2026-03-23-12-07-48.png)
-![Preview](https://i.ibb.co/wrPnH4dV/Screenshot-2026-03-23-12-10-33.png))
-![Preview](https://i.ibb.co/CpnfnbxD/Screenshot-2026-03-23-12-07-48.png)
-![Preview](https://i.ibb.co/CpnfnbxD/Screenshot-2026-03-23-12-07-48.png)
+
+- ⚖️ License & Usage
+
+This project is provided for personal and server use only.
+
+- ❌ You may NOT reupload this project anywhere else
+- ❌ You may NOT resell, redistribute, or claim this work as your own
+- ❌ You may NOT include this in paid packs or marketplaces
+- ✅ You ARE allowed to edit and use it for your own Rust server
+
+Any violation of these terms will be considered forfeit of usage rights.
+
 ## 🔥 Features
 
 - ⚙️ Vue 3 + `<script setup>` + TypeScript
@@ -194,16 +203,7 @@ This project is designed to feel like:
 - Server status indicator (online/offline)
 - Map wipe countdown timer
 
-- ⚖️ License & Usage
 
-This project is provided for personal and server use only.
-
-❌ You may NOT reupload this project anywhere else
-❌ You may NOT resell, redistribute, or claim this work as your own
-❌ You may NOT include this in paid packs or marketplaces
-✅ You ARE allowed to edit and use it for your own Rust server
-
-Any violation of these terms will be considered forfeit of usage rights.
 
 ---
 
