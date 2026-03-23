@@ -32,6 +32,7 @@ Knowing the last and next wipe helps you strategize and stay on top!
       <div class="wipe-cards">
         <!-- Last Wipe -->
         <div class="wipe-card">
+          <div class="wipe-card-bg last-wipe-bg"></div>
           <div class="wipe-header">
             <span class="wipe-title">LAST WIPE</span>
           </div>
@@ -42,6 +43,7 @@ Knowing the last and next wipe helps you strategize and stay on top!
 
         <!-- Next Wipe -->
         <div class="wipe-card highlight">
+          <div class="wipe-card-bg next-wipe-bg"></div>
           <div class="wipe-header">
             <span class="wipe-title">NEXT WIPE</span>
           </div>
@@ -144,21 +146,50 @@ Knowing the last and next wipe helps you strategize and stay on top!
 }
 
 .wipe-card {
+  position: relative;
   flex: 1 1 280px;
   max-width: 350px;
   background: linear-gradient(145deg, #1c1c1c, #111);
   border: 1px solid #2a2a2a;
   padding: 25px;
   text-align: center;
+  overflow: hidden;
   transition: all 0.2s ease;
 }
+
 .wipe-card:hover {
   border-color: #d47a2a;
   transform: translateY(-4px);
   box-shadow: 0 0 20px rgba(212,122,42,0.2);
 }
+
 .wipe-card.highlight {
   border-color: #d47a2a;
+}
+
+/* Rust map backgrounds */
+.wipe-card-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.6;
+  z-index: 0;
+  filter: brightness(0.5) contrast(1.2);
+  transition: opacity 0.3s ease;
+}
+.last-wipe-bg {
+  background-image: url('https://cdn.mos.cms.futurecdn.net/BNcWMgdZzv8aEWQGQKGRKb.jpg'); /* Last wipe Rust map image */
+}
+.next-wipe-bg {
+  background-image: url('https://cdn.mos.cms.futurecdn.net/BNcWMgdZzv8aEWQGQKGRKb.jpg'); /* Next wipe Rust map image */
+}
+
+/* Card content above map */
+.wipe-header, .wipe-body {
+  position: relative;
+  z-index: 1;
 }
 
 /* Card header */

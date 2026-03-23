@@ -2,14 +2,14 @@
 defineProps<{
   members: {
     name: string;
-    role: string;
+    role: string; // "Owner" | "Admin" | "Mod" | "Support"
     avatar: string;
   }[];
 }>();
 
 const sectionDescription = `
 Meet the core team behind our server. Each member is dedicated to 
-keeping the community thriving, from leading raids and moderating chats 
+keeping the community thriving, from managing the server and moderating chats 
 to providing top-tier support. Together, they ensure every player has 
 an unforgettable experience.
 `;
@@ -46,11 +46,6 @@ an unforgettable experience.
           <p :class="['role-badge', member.role.toLowerCase()]">
             {{ member.role }}
           </p>
-
-          <!-- Button -->
-          <button class="view-profile-btn">
-            VIEW PROFILE
-          </button>
 
         </div>
       </div>
@@ -182,17 +177,19 @@ an unforgettable experience.
   width: 100px;
   height: 100px;
   border: 2px solid #333;
+  border-radius: 50%;
 }
 
 /* Role highlights */
-.avatar-wrapper.leader img {
+.avatar-wrapper.owner img {
   border-color: #d47a2a;
 }
-
-.avatar-wrapper.raider img {
+.avatar-wrapper.admin img {
   border-color: #b86b2c;
 }
-
+.avatar-wrapper.mod img {
+  border-color: #7289da;
+}
 .avatar-wrapper.support img {
   border-color: #666;
 }
@@ -205,6 +202,7 @@ an unforgettable experience.
   width: 10px;
   height: 10px;
   background: #4cd137;
+  border-radius: 50%;
 }
 
 /* Name */
@@ -220,6 +218,10 @@ an unforgettable experience.
   color: #888;
   margin-bottom: 10px;
 }
+.role-badge.owner { color: #d47a2a; }
+.role-badge.admin { color: #b86b2c; }
+.role-badge.mod { color: #7289da; }
+.role-badge.support { color: #aaa; }
 
 /* Button */
 .view-profile-btn {

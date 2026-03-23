@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import Footer from "./components/Footer.vue"; // import the new Footer component
-import About from "./components/About.vue"; // import About component
-import Banner from "./components/Banner.vue"; // Import Banner component
+import Footer from "./components/Footer.vue";
+import About from "./components/About.vue";
+import Banner from "./components/Banner.vue";
 import Nav from "./components/Nav.vue";
 import Members from "./components/Members.vue";
 import Wipes from "./components/Wipes.vue";
 import Events from "./components/Events.vue";
 
-// Mock clan data
+// Clan Data
 const clan = {
-  name: "Red Rust Raiders",
+  name: "Rust x3: Rusta",
   tagline: "Survive. Raid. Dominate.",
-  bannerImg: "https://picsum.photos/seed/clanbanner/1600/400",
-  description: "We are the Red Rust Raiders, a PvP-focused Rust clan. Join us on epic raids and community events!",
+  bannerImg: "https://i.ibb.co/7J7n0qpr/Rust-Header.webp", // Rust style banner
+  description: "We are the Red Rust Raiders, a PvP-focused Rust clan. Join epic raids and events!",
   discordLink: "#",
   members: [
-    { name: "Alpha", role: "Leader", avatar: "https://i.pravatar.cc/150?img=1" },
-    { name: "Bravo", role: "Raider", avatar: "https://i.pravatar.cc/150?img=2" },
-    { name: "Charlie", role: "Support", avatar: "https://i.pravatar.cc/150?img=3" },
-    { name: "Delta", role: "Raider", avatar: "https://i.pravatar.cc/150?img=4" }
+    { name: "Alpha", role: "Owner", avatar: "https://i.pravatar.cc/150?img=1" },
+    { name: "Bravo", role: "Admin", avatar: "https://i.pravatar.cc/150?img=2" },
+    { name: "Charlie", role: "Mod", avatar: "https://i.pravatar.cc/150?img=3" },
+    { name: "Delta", role: "Support", avatar: "https://i.pravatar.cc/150?img=4" }
   ],
   events: [
     { title: "Server Raid #23", date: "2026-03-25", link: "#" },
@@ -34,11 +34,8 @@ const clan = {
 
 <template>
   <div class="clan-home">
-
-    <!-- Navigation (New Component) -->
     <Nav :name="clan.name" :discordLink="clan.discordLink" />
 
-    <!-- Banner Section (New Component) -->
     <Banner
       :name="clan.name"
       :tagline="clan.tagline"
@@ -46,266 +43,155 @@ const clan = {
       :discordLink="clan.discordLink"
     />
 
-    <!-- About Section (New Component) -->
     <About :description="clan.description" />
-    
-    <!-- Members Section (New Component) -->
+
     <Members :members="clan.members" />
 
-    <!-- Wipes Section (New Component) -->
     <Wipes :lastWipe="clan.wipes.lastWipe" :nextWipe="clan.wipes.nextWipe" />
-    
-   <!-- Events Section (New Component) -->
-   <Events :events="clan.events" />
 
-    <!-- Footer -->
+    <Events :events="clan.events" />
+
     <Footer :clanName="clan.name" />
-
   </div>
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-/* ------------------ GLOBAL BACKGROUND ------------------ */
 body {
-  background: url('https://picsum.photos/seed/background/1920/1080') no-repeat center center fixed;
-  background-size: cover;
+  font-family: 'Roboto', sans-serif;
+  background: url('https://wallpapers.com/images/high/rust-game-iuw5qm29ai120goe.webp') center/cover no-repeat fixed;
+  color: #ffffff;
 }
 
-/* ---------- EXISTING CLAN HOME STYLES ---------- */
-.clan-home {
-  font-family: 'Inter', sans-serif;
-  color: #eee;
-  /* Remove solid background to show body background */
-  min-height: 100vh;
-  scroll-behavior: smooth;
-}
-
-/* Top Navigation */
-.top-nav {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  background: rgba(27,27,27,0.95);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 40px;
-  z-index: 100;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.nav-logo {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #f05454;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 24px;
-}
-
-.nav-links li a {
-  color: #eee;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
-}
-
-.nav-links li a:hover {
-  color: #f05454;
-}
-
-.discord-link {
-  background: #7289da;
-  padding: 6px 14px;
-  border-radius: 8px;
-  color: #fff;
-}
-
-.discord-link:hover {
-  background: #5b6eae;
-}
-
-/* Banner Section */
+/* Banner */
 .banner-section {
   position: relative;
   text-align: center;
+  overflow: hidden;
 }
-.banner-img {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  opacity: 0.8;
+.banner-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('https://i.imgur.com/Nc5MFD6.png') repeat;
+  opacity: 1.7;
 }
 .banner-content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 2;
 }
 .banner-content h1 {
   font-size: 4rem;
   color: #f05454;
-  margin-bottom: 10px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 12px #000;
 }
 .banner-content p {
   font-size: 1.5rem;
   color: #fff;
-  margin-bottom: 20px;
+  margin: 12px 0 20px;
 }
 .discord-btn {
-  padding: 12px 32px;
-  background: #7289da;
-  color: #fff;
+  padding: 12px 36px;
+  background: #f05454;
   border-radius: 12px;
+  font-weight: 700;
   text-decoration: none;
-  font-weight: 600;
+  color: #111;
 }
 .discord-btn:hover {
-  background: #5b6eae;
+  background: #ff7b45;
+  transform: translateY(-2px);
+  transition: 0.3s;
+}
+
+/* Members */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+.member-card {
+  background: url('https://i.imgur.com/Nc5MFD6.png') repeat, linear-gradient(145deg,#1c1c1c,#111);
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.member-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 18px rgba(212,122,42,0.4);
+}
+.avatar-wrapper img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px solid #f05454;
+}
+
+/* Wipes */
+.wipe-card {
+  position: relative;
+  background: linear-gradient(145deg, #1c1c1c, #111);
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.wipe-card::before {
+  content:"";
+  position: absolute;
+  inset: 0;
+  background: url('https://i.imgur.com/7oVXLkB.jpg') center/cover no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+.wipe-card.highlight::before {
+  background-image: url('https://i.imgur.com/xxF1Xyd.jpg');
 }
 
 /* Sections */
 section {
-  padding: 40px 20px;
+  padding: 60px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 h2 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   color: #f05454;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   text-align: center;
 }
 
-/* Members Section */
-.members-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 30px;
-  justify-items: center;
-}
-
-.member-card {
-  background: rgba(30,30,30,0.9);
-  border-radius: 20px;
-  padding: 24px 16px 32px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.member-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.7);
-}
-
-.avatar-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.avatar-wrapper img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  margin-bottom: 12px;
-  border: 3px solid #f05454;
-}
-
-.status-dot {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid #1b1b1b;
-}
-
-.status-dot.online {
-  background: #4cd137;
-}
-
-.member-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 6px;
-}
-
-.role-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: #fff;
-}
-
-/* Role Colors */
-.role-badge.leader { background: #f05454; }
-.role-badge.raider { background: #f5a623; }
-.role-badge.support { background: #4fc1ff; }
-
+/* Buttons */
 .view-profile-btn {
-  padding: 8px 16px;
-  background: #7289da;
-  color: #fff;
-  border-radius: 12px;
+  padding: 10px 22px;
+  background: #f05454;
+  color: #111;
+  border-radius: 10px;
   border: none;
-  cursor: pointer;
   font-weight: 600;
-  transition: background 0.2s;
 }
-
 .view-profile-btn:hover {
-  background: #5b6eae;
+  background: #ff7b45;
+  transform: translateY(-2px);
+  transition: 0.3s;
 }
 
-/* Wipes Section */
-.wipes-section .wipe-alert {
-  background: rgba(245, 84, 84, 0.9);
-  padding: 20px 24px;
-  border-radius: 12px;
-  text-align: center;
-  font-size: 1.2rem;
-  color: #fff;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-/* Events Section */
-.events-section ul {
-  list-style: none;
-  padding: 0;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.events-section li {
-  background: rgba(30,30,30,0.8);
-  margin-bottom: 12px;
-  padding: 12px 16px;
-  border-radius: 12px;
-}
-.events-section a {
-  color: #f05454;
-  text-decoration: none;
-  margin-left: 8px;
-}
-.events-section a:hover {
-  text-decoration: underline;
-}
-
-/* Footer Section */
+/* Footer */
 .footer-section {
   text-align: center;
   padding: 40px 20px;
-  color: #888;
+  color: #aaa;
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 </style>

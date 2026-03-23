@@ -79,7 +79,7 @@ const serverInfo = {
 .banner-section {
   position: relative;
   width: 100%;
-  height: 600px;
+  height: 500px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -92,7 +92,7 @@ const serverInfo = {
   height: 110%;
   background-size: cover;
   background-position: center;
-  filter: brightness(0.3) contrast(1.4) saturate(0.7);
+  filter: brightness(1.3) contrast(1.4) saturate(0.7);
   transform: scale(1.1);
 }
 .light-flicker {
@@ -114,7 +114,7 @@ const serverInfo = {
   width: 100%;
   height: 100%;
   background: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
-  opacity: 0.3;
+  opacity: 1.3;
 }
 .smoke { position: absolute; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.05), transparent 70%); animation: smokeMove 30s linear infinite; }
 .smoke-2 { animation-duration: 45s; opacity: 0.6; }
