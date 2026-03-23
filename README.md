@@ -1,12 +1,12 @@
 # 🛢️ Rust Server Website (Vue 3 + TypeScript + Vite)
 
 A fully custom **Rust-style server website** built with Vue 3, TypeScript, and Vite.
-Designed specifically for **server owners**, not generic users — focused on control, clarity, and a cinematic game-style UI.
+Designed specifically for **server owners**, not generic users — focused on control, clarity, and a cinematic game-style UI.https://i.ibb.co/q36B66Gp/Screenshot-2026-03-23-12-04-45.png
 
 ---
 ![Preview](https://i.ibb.co/NdHC2pwX/Screenshot-2026-03-23-11-14-35.png)
-![Preview](https://i.ibb.co/NdHC2pwX/Screenshot-2026-03-23-11-14-35.png](https://i.ibb.co/q36B66Gp/Screenshot-2026-03-23-12-04-45.png)
 
+![Preview](https://i.ibb.co/q36B66Gp/Screenshot-2026-03-23-12-04-45.png)
 ## 🔥 Features
 
 - ⚙️ Vue 3 + `<script setup>` + TypeScript
