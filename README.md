@@ -1,10 +1,22 @@
-# 🛢️ Rust Server Website (Vue 3 + TypeScript + Vite)
+# 🛢️ Rust Server Website (Vue 3 + TypeScript + Vite) https://discord.gg/tBNMaaV8EX
 
 A fully custom **Rust-style server website** built with Vue 3, TypeScript, and Vite.
 Designed specifically for **server owners**, not generic users — focused on control, clarity, and a cinematic game-style UI.
 
 ---
 ![Preview](https://i.ibb.co/NdHC2pwX/Screenshot-2026-03-23-11-14-35.png)
+![Preview](https://i.ibb.co/CpnfnbxD/Screenshot-2026-03-23-12-07-48.png)
+
+- ⚖️ License & Usage
+
+This project is provided for personal and server use only.
+
+- ❌ You may NOT reupload this project anywhere else
+- ❌ You may NOT resell, redistribute, or claim this work as your own
+- ❌ You may NOT include this in paid packs or marketplaces
+- ✅ You ARE allowed to edit and use it for your own Rust server
+
+Any violation of these terms will be considered forfeit of usage rights.
 
 ## 🔥 Features
 
@@ -190,6 +202,8 @@ This project is designed to feel like:
 - Admin panel to edit events
 - Server status indicator (online/offline)
 - Map wipe countdown timer
+
+
 
 ---
 
