@@ -8,6 +8,7 @@ import Members from "./components/Members.vue";
 import Wipes from "./components/Wipes.vue";
 import Events from "./components/Events.vue";
 import Faq from "./components/Faq.vue";
+import Gallary from "./components/Gallary.vue";
 
 // Clan Data
 const clan = {
@@ -52,9 +53,12 @@ const clan = {
 
     <Events :events="clan.events" />
 
+    <Gallary :clanName="clan.Gallary" />
+
     <Faq :clanName="clan.name" />
 
     <Footer :clanName="clan.name" />
+
   </div>
 </template>
 

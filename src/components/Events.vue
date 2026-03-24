@@ -1,17 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
-// Full Rust-inspired events
+// Full Rust-inspired events with example images
 const events = [
-  { title: "Wipe Day: Fresh Start", date: "2026-04-01", description: "The server resets. All resources are fresh, bases wiped. Gather, craft, and stake your claim before rivals do. The war for territory begins now." },
-  { title: "Airdrop Madness", date: "2026-04-05", description: "A mysterious supply plane scatters high-tier loot across the map. Beware: other survivors are hunting the same prizes. Fight, flee, or snipe from a distance." },
-  { title: "Raiders on the Move", date: "2026-04-10", description: "A notorious raider clan is moving through the territory. Expect heavy PvP and unexpected assaults on bases. Prepare defenses or ambush them first." },
-  { title: "Radiation Storm", date: "2026-04-12", description: "A sudden spike in radiation hits the outskirts. Protective gear is mandatory. Loot radioactive zones for rare crafting components—risk vs reward is real." },
-  { title: "Supply Run Challenge", date: "2026-04-15", description: "Teams compete to secure the most resources in limited time. PvP allowed. Only the fastest and strongest survive. Gather, defend, and dominate the leaderboards." },
-  { title: "Helicopter Hunt", date: "2026-04-18", description: "A patrol helicopter spawns over high-risk zones. Take it down to claim explosive loot—but the alarm draws everyone’s attention. Strategy, skill, and timing are everything." },
-  { title: "Night of the Wiped", date: "2026-04-22", description: "The server plunges into darkness. Night vision or torchlight is your only ally. Expect ambushes, stealth raids, and survival horror-style encounters as you fight for every scrap." },
-  { title: "Elite Loot Cache", date: "2026-04-25", description: "Rare crates spawn randomly across the map. The contents are legendary—but only those with speed and cunning will claim them. PvP chaos guaranteed." },
-  { title: "Final Wipe Countdown", date: "2026-04-30", description: "The end of the season approaches. Fortify, loot, and raid like there’s no tomorrow. The final push for dominance is here—who will rise, and who will fall?" }
+  { 
+    title: "Wipe Day: Fresh Start", 
+    date: "2026-04-01", 
+    image: "https://images.squarespace-cdn.com/content/v1/602d246245658135031e4b2a/49d78f2e-156a-472f-9ce4-590b7d7502c1/V1_Updated.png",
+    description: "The server resets. All resources are fresh, bases wiped. Gather, craft, and stake your claim before rivals do. The war for territory begins now." 
+  },
+  { 
+    title: "Airdrop Madness", 
+    date: "2026-04-05", 
+    image: "https://images.squarespace-cdn.com/content/v1/602d246245658135031e4b2a/49d78f2e-156a-472f-9ce4-590b7d7502c1/V1_Updated.png",
+    description: "A mysterious supply plane scatters high-tier loot across the map. Beware: other survivors are hunting the same prizes. Fight, flee, or snipe from a distance." 
+  },
+  { 
+    title: "Raiders on the Move", 
+    date: "2026-04-10", 
+    image: "https://images.squarespace-cdn.com/content/v1/602d246245658135031e4b2a/49d78f2e-156a-472f-9ce4-590b7d7502c1/V1_Updated.png",
+    description: "A notorious raider clan is moving through the territory. Expect heavy PvP and unexpected assaults on bases. Prepare defenses or ambush them first." 
+  },
+  { 
+    title: "Radiation Storm", 
+    date: "2026-04-12",
+    image: "https://images.squarespace-cdn.com/content/v1/602d246245658135031e4b2a/49d78f2e-156a-472f-9ce4-590b7d7502c1/V1_Updated.png",
+    description: "A sudden spike in radiation hits the outskirts. Protective gear is mandatory. Loot radioactive zones for rare crafting components—risk vs reward is real." 
+  }
 ];
 
 // Modal state
@@ -23,9 +38,14 @@ const openModal = (event: typeof events[0]) => {
   isModalOpen.value = true;
 };
 
+// Close modal and restore scroll
 const closeModal = () => {
   isModalOpen.value = false;
 };
+
+watch(isModalOpen, (val) => {
+  document.body.style.overflow = val ? 'hidden' : '';
+});
 
 // Days left calculation
 const daysLeft = (eventDate: string) => {
@@ -58,7 +78,13 @@ Prepare your gear, team up, and dominate the server together. Rust never sleeps.
       <p class="description" v-html="sectionDescription"></p>
 
       <div class="events-grid">
-        <div v-for="event in events" :key="event.title" class="event-card" @click="openModal(event)">
+        <div 
+          v-for="event in events" 
+          :key="event.title" 
+          class="event-card" 
+          @click="openModal(event)"
+          :style="{ backgroundImage: `url(${event.image})` }"
+        >
           <div class="event-date">
             {{ event.date }}<br>
             <small>{{ daysLeft(event.date) }} days left</small>
@@ -68,21 +94,22 @@ Prepare your gear, team up, and dominate the server together. Rust never sleeps.
         </div>
       </div>
     </div>
-
-    <!-- Modal -->
-    <div v-if="isModalOpen" class="modal-backdrop" @click.self="closeModal">
-      <div class="modal">
-        <h3>{{ selectedEvent?.title }}</h3>
-        <p class="modal-date">Date: {{ selectedEvent?.date }} ({{ selectedEvent ? daysLeft(selectedEvent.date) : 0 }} days left)</p>
-        <p class="modal-description">{{ selectedEvent?.description }}</p>
-        <button class="close-btn" @click="closeModal">CLOSE</button>
-      </div>
-    </div>
   </section>
+
+  <!-- Modal outside everything to always appear on top -->
+  <div v-if="isModalOpen" class="modal-backdrop" @click.self="closeModal">
+    <div class="modal">
+      <img v-if="selectedEvent?.image" :src="selectedEvent.image" class="modal-img"/>
+      <h3>{{ selectedEvent?.title }}</h3>
+      <p class="modal-date">Date: {{ selectedEvent?.date }} ({{ selectedEvent ? daysLeft(selectedEvent.date) : 0 }} days left)</p>
+      <p class="modal-description">{{ selectedEvent?.description }}</p>
+      <button class="close-btn" @click="closeModal">CLOSE</button>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-/* Event section (same as before) */
+/* Event section */
 .events-section { position: relative; width: 100%; min-height: 600px; padding: 80px 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; color: #ddd; }
 .bg { position: absolute; width: 110%; height: 110%; background: url('https://images.unsplash.com/photo-1627002222747-7eb799c3f07a?auto=format&fit=crop&w=1950&q=80') center/cover; filter: brightness(0.25) contrast(1.4); }
 .overlay { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.95)); }
@@ -97,15 +124,16 @@ Prepare your gear, team up, and dominate the server together. Rust never sleeps.
 .description { max-width: 900px; margin: 0 auto 40px; line-height: 1.8; color: #ccc; font-size: 1.15rem; }
 
 .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-.event-card { position: relative; background: linear-gradient(145deg, #1c1c1c, #111); border: 1px solid #2a2a2a; padding: 25px 20px; border-radius: 16px; cursor: pointer; transition: all 0.3s ease; }
+.event-card { position: relative; background: linear-gradient(145deg, #1c1c1c, #111); border: 1px solid #2a2a2a; padding: 25px 20px; border-radius: 16px; cursor: pointer; transition: all 0.3s ease; background-size: cover; background-position: center; }
 .event-card:hover { border-color: #d47a2a; transform: translateY(-6px) scale(1.02); box-shadow: 0 0 24px rgba(212,122,42,0.3); }
 .event-date { position: absolute; top: -8px; right: -8px; background: #d47a2a; color: #111; padding: 6px 12px; font-size: 0.8rem; font-weight: bold; border-radius: 6px; box-shadow: 0 0 6px rgba(212,122,42,0.6); line-height: 1.2; }
 .event-card h3 { margin: 15px 0 10px; color: #fff; font-size: 1.3rem; text-shadow: 0 0 6px rgba(0,0,0,0.5); }
 .event-short { font-size: 0.95rem; color: #ccc; margin-bottom: 15px; line-height: 1.6; }
 
 /* Modal */
-.modal-backdrop { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.75); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.modal-backdrop { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 99999; }
 .modal { background: #1c1c1c; padding: 30px 25px; border-radius: 16px; max-width: 500px; width: 90%; color: #fff; text-align: center; box-shadow: 0 0 24px rgba(212,122,42,0.5); animation: modalFade 0.3s ease; }
+.modal-img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
 @keyframes modalFade { from {opacity:0; transform:scale(0.95);} to {opacity:1; transform:scale(1);} }
 .modal h3 { margin-bottom: 15px; font-size: 1.8rem; color: #d47a2a; }
 .modal-date { margin-bottom: 20px; font-size: 0.9rem; color: #ccc; }
