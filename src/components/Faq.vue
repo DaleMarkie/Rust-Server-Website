@@ -21,8 +21,8 @@ const setCategory = (cat: string) => {
   activeCategory.value = cat;
 };
 
-const toggleFaq = (index: number) => {
-  faqs.value[index].open = !faqs.value[index].open;
+const toggleFaq = (faq: { open: boolean }) => {
+  faq.open = !faq.open;
 };
 
 const filteredFaqs = computed(() => {
@@ -38,7 +38,7 @@ const filteredFaqs = computed(() => {
   <section id="faq" class="faq-section">
     <h2>Frequently Asked Questions</h2>
     <p class="faq-description">
-      Got questions about our Rust server? From joining the server, understanding wipes, to gameplay tips and rules, we've got you covered. 
+      Got questions about our Rust server? From joining, understanding wipes, to gameplay tips and rules, we've got you covered. 
       Use the filters or search to quickly find what you need and stay ahead in the world of Rust!
     </p>
     <div class="divider"></div>
@@ -66,15 +66,22 @@ const filteredFaqs = computed(() => {
 
     <!-- FAQ List -->
     <div class="faq-list">
-      <div v-for="(faq, index) in filteredFaqs" :key="index" class="faq-item">
-        <div class="faq-question" @click="toggleFaq(index)">
+      <div 
+        v-for="faq in filteredFaqs" 
+        :key="faq.question"
+        class="faq-item"
+        @click="toggleFaq(faq)"
+      >
+        <div class="faq-question">
           <span>{{ faq.question }}</span>
-          <span class="toggle-icon">{{ faq.open ? "-" : "+" }}</span>
+          <span class="toggle-icon">{{ faq.open ? "−" : "+" }}</span>
         </div>
-        <div v-if="faq.open" class="faq-answer">
-          <p>{{ faq.answer }}</p>
-          <span class="category-tag">{{ faq.category }}</span>
-        </div>
+        <transition name="faq-slide">
+          <div v-show="faq.open" class="faq-answer">
+            <p>{{ faq.answer }}</p>
+            <span class="category-tag" @click.stop="setCategory(faq.category)">{{ faq.category }}</span>
+          </div>
+        </transition>
       </div>
       <p v-if="filteredFaqs.length === 0" class="no-results">No FAQs match your search.</p>
     </div>
@@ -88,7 +95,6 @@ const filteredFaqs = computed(() => {
   margin: 0 auto;
   color: #eee;
   font-family: 'Roboto', sans-serif;
-  position: relative;
 }
 
 /* Title & Description */
@@ -164,6 +170,7 @@ h2 {
   padding: 16px 20px;
   border: 1px solid #2a2a2a;
   transition: 0.3s;
+  cursor: pointer;
 }
 .faq-item:hover {
   border-color: #d47a2a;
@@ -172,11 +179,11 @@ h2 {
   display: flex;
   justify-content: space-between;
   font-weight: 600;
-  cursor: pointer;
 }
 .faq-answer {
   margin-top: 10px;
   color: #ccc;
+  line-height: 1.5;
 }
 .category-tag {
   display: inline-block;
@@ -186,6 +193,11 @@ h2 {
   background: #d47a2a;
   padding: 2px 8px;
   border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.category-tag:hover {
+  background: #f0843d;
 }
 
 /* No results */
@@ -193,6 +205,20 @@ h2 {
   text-align: center;
   color: #ff5e5e;
   margin-top: 20px;
+}
+
+/* Accordion Animation */
+.faq-slide-enter-active, .faq-slide-leave-active {
+  transition: all 0.3s ease;
+}
+.faq-slide-enter-from, .faq-slide-leave-to {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+.faq-slide-enter-to, .faq-slide-leave-from {
+  max-height: 500px;
+  opacity: 1;
 }
 
 /* Mobile */

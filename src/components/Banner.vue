@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 // Modal state
 const isServerModalOpen = ref(false);
-
 const openServerModal = () => { isServerModalOpen.value = true; };
 const closeServerModal = () => { isServerModalOpen.value = false; };
 
@@ -14,18 +13,59 @@ const serverInfo = {
   instructions: "Open Rust, press F1, type `connect 123.456.789.0:28015` and hit Enter."
 };
 
-// --- EDIT THESE TEXTS HERE ---
+// Banner texts
 const bannerTitle = "Welcome To";
 const bannerTagline = "x3|Trio|Monthly";
 const bannerDescription = "Join the Red Rust Raiders, a hardcore PvP Rust clan. Dominate raids, control the map, and survive with the best!";
-const bannerImg = "https://picsum.photos/seed/clanbanner/1600/400";
 const discordLink = "#";
+
+// --- SLIDESHOW IMAGES ---
+const bannerImages = [
+  "https://wallpapercave.com/wp/wp4063841.png",
+  "https://images7.alphacoders.com/697/697355.jpg",
+  "https://images6.alphacoders.com/980/980706.png"
+];
+
+const currentSlide = ref(0);
+const nextSlide = ref(1);
+
+// To trigger fade animation
+const fade = ref(false);
+
+let intervalId: number;
+
+onMounted(() => {
+  intervalId = setInterval(() => {
+    fade.value = true; // start fading out
+    setTimeout(() => {
+      currentSlide.value = nextSlide.value;
+      nextSlide.value = (nextSlide.value + 1) % bannerImages.length;
+      fade.value = false; // fade in complete
+    }, 1000); // match transition duration
+  }, 5000); // 5 seconds per slide
+});
+
+onUnmounted(() => {
+  clearInterval(intervalId);
+});
+
+// Copy server command
+const copyCommand = () => {
+  navigator.clipboard.writeText(`connect ${serverInfo.ip}:${serverInfo.port}`);
+  alert("Copied to clipboard!");
+};
 </script>
 
 <template>
   <section class="banner-section">
-    <!-- Background & Effects -->
-    <div class="banner-bg" :style="{ backgroundImage: `url(${bannerImg})` }"></div>
+    <!-- Cinematic slideshow background -->
+    <div class="banner-bg kenburns" :style="{ backgroundImage: `url(${bannerImages[currentSlide]})` }"></div>
+    <div
+      class="banner-bg kenburns fade"
+      v-if="fade"
+      :style="{ backgroundImage: `url(${bannerImages[nextSlide]})` }"
+    ></div>
+
     <div class="light-flicker"></div>
     <div class="banner-overlay"></div>
     <div class="grain"></div>
@@ -71,6 +111,12 @@ const discordLink = "#";
         <h3>Server Info</h3>
         <p><strong>IP:</strong> {{ serverInfo.ip }}</p>
         <p><strong>Port:</strong> {{ serverInfo.port }}</p>
+
+        <div class="connect-box">
+          <code>{{ `connect ${serverInfo.ip}:${serverInfo.port}` }}</code>
+          <button @click="copyCommand" class="copy-btn">COPY</button>
+        </div>
+
         <p class="instructions">{{ serverInfo.instructions }}</p>
         <button class="close-btn" @click="closeServerModal">CLOSE</button>
       </div>
@@ -79,9 +125,43 @@ const discordLink = "#";
 </template>
 
 <style scoped>
-/* Banner styles remain the same as before */
 .banner-section { position: relative; width: 100%; height: 500px; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: 'Arial Black', sans-serif; }
-.banner-bg { position: absolute; width: 110%; height: 110%; background-size: cover; background-position: center; filter: brightness(1.3) contrast(1.4) saturate(0.7); transform: scale(1.1); }
+
+/* Base background */
+.banner-bg {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(1.3) contrast(1.4) saturate(0.7);
+  transform: scale(1.1);
+  transition: opacity 1s ease-in-out;
+}
+
+/* Fade overlay for next image */
+.banner-bg.fade {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Ken Burns effect */
+.kenburns {
+  animation: kenburns 20s linear infinite;
+}
+
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.05) translate(10px, 5px); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+
+/* Effects */
 .light-flicker { position: absolute; width: 100%; height: 100%; background: rgba(255,140,60,0.05); animation: flicker 3s infinite; }
 @keyframes flicker { 0%,100% { opacity:0.05; } 50% { opacity:0.12; } }
 .banner-overlay { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.95)); }
@@ -92,6 +172,7 @@ const discordLink = "#";
 .sparks { position: absolute; bottom: 0; width: 2px; height: 8px; background: #ff8c42; animation: sparkUp 5s linear infinite; }
 @keyframes sparkUp { 0% { transform: translateY(0); opacity:0.5; } 100% { transform: translateY(-300px); opacity:0; } }
 
+/* Content */
 .banner-content { position: relative; text-align: center; z-index: 5; max-width: 900px; }
 .banner-title { font-size: 4.5rem; color: #d47a2a; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 3px 10px rgba(0,0,0,0.9); }
 .divider { width: 120px; height: 3px; background: #d47a2a; margin: 20px auto; }
@@ -109,6 +190,7 @@ const discordLink = "#";
 .label { display: block; font-size: 0.8rem; color: #777; }
 .value { font-size: 1.2rem; color: #fff; font-weight: bold; }
 
+/* Modal */
 .modal-backdrop { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:1000; }
 .modal { background:#1c1c1c; padding:30px 25px; border-radius:16px; max-width:500px; width:90%; color:#fff; text-align:center; box-shadow:0 0 24px rgba(212,122,42,0.5); animation: modalFade 0.3s ease; }
 @keyframes modalFade { from {opacity:0; transform:scale(0.95);} to {opacity:1; transform:scale(1);} }
