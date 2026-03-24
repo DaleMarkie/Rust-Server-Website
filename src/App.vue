@@ -13,7 +13,7 @@ import Faq from "./components/Faq.vue";
 const clan = {
   name: "Rust x3: Rusta",
   tagline: "Survive. Raid. Dominate.",
-  bannerImg: "https://i.ibb.co/7J7n0qpr/Rust-Header.webp", // Rust style banner
+  bannerImg: "https://i.ibb.co/7J7n0qpr/Rust-Header.webp",
   description: "We are the Red Rust Raiders, a PvP-focused Rust clan. Join epic raids and events!",
   discordLink: "#",
   members: [
@@ -61,82 +61,104 @@ const clan = {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-body {
+/* ========================= */
+/* Main cinematic background  */
+/* ========================= */
+.clan-home {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  color: #ffffff;
   font-family: 'Roboto', sans-serif;
-  background: url('https://wallpapers.com/images/high/rust-game-iuw5qm29ai120goe.webp') center/cover no-repeat fixed;
-  color: #f80000;
+
+  /* Background image + dark overlay */
+  background: 
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)),
+    url('https://images.unsplash.com/photo-1617631713246-97f3f7e4e8b4?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
+  z-index: 0;
+  overflow: hidden;
+  transition: background 0.5s ease;
 }
 
-/* Banner */
-.banner-section {
-  position: relative;
-  text-align: center;
-  overflow: hidden;
-}
-.banner-section::before {
+/* Subtle particle overlay */
+.clan-home::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: url('https://i.imgur.com/Nc5MFD6.png') repeat;
-  opacity: 1.7;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 2px) repeat;
+  background-size: 50px 50px;
+  animation: moveParticles 60s linear infinite;
+  z-index: 1;
 }
-.banner-content {
+
+@keyframes moveParticles {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(100px,100px); }
+}
+
+/* Cinematic vignette */
+.clan-home::after {
+  content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(0,0,0,0) 70%, rgba(0,0,0,0.7) 100%);
   z-index: 2;
 }
-/* Upgrade the clan name in banner */
+
+/* ========================= */
+/* Ensure text is readable   */
+/* ========================= */
+.clan-home * {
+  color: #ffffff !important;
+}
+
+/* ========================= */
+/* Banner improvements       */
+/* ========================= */
 .banner-content h1 {
-  font-size: 5rem;              /* bigger and bolder */
-  color: #ff4e4e;               /* Rusty red highlight */
-  letter-spacing: 6px;          /* extra spacing for style */
-  font-weight: 900;             /* strong bold */
+  font-size: 5rem;
+  font-weight: 900;
+  color: #ffffff;
   text-shadow: 
-    0 0 8px #000,               /* black glow */
-    0 0 15px rgba(255,78,78,0.6), /* reddish glow */
-    2px 2px 2px #000;           /* subtle depth shadow */
-  margin-bottom: 20px;
+    0 0 8px #000,
+    0 0 15px rgba(255,255,255,0.5),
+    2px 2px 2px #000;
+  letter-spacing: 6px;
   line-height: 1.1;
+  margin-bottom: 20px;
   transition: all 0.3s ease;
 }
 
 .banner-content h1:hover {
-  color: #ff7b45;               /* bright orange on hover */
+  color: #f0f0f0;
   text-shadow: 
     0 0 10px #000,
-    0 0 20px rgba(255,123,69,0.8),
+    0 0 20px rgba(255,255,255,0.8),
     2px 2px 3px #000;
   transform: scale(1.05);
 }
+
 .banner-content p {
   font-size: 1.5rem;
-  color: #ff0303;
+  color: #ffffff;
   margin: 12px 0 20px;
 }
-.discord-btn {
-  padding: 12px 36px;
-  background: #f05454;
-  border-radius: 12px;
-  font-weight: 700;
-  text-decoration: none;
-  color: #111;
-}
-.discord-btn:hover {
-  background: #ff7b45;
-  transform: translateY(-2px);
-  transition: 0.3s;
-}
 
-/* Members */
+/* ========================= */
+/* Members, wipes, sections  */
+/* ========================= */
 .members-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 30px;
 }
+
 .member-card {
-  background: url('https://i.imgur.com/Nc5MFD6.png') repeat, linear-gradient(145deg,#1c1c1c,#111);
+  background: linear-gradient(145deg,#1c1c1c,#111);
   border: 1px solid #2a2a2a;
   border-radius: 16px;
   padding: 24px;
@@ -145,18 +167,19 @@ body {
   overflow: hidden;
   transition: all 0.3s ease;
 }
+
 .member-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 0 18px rgba(212,122,42,0.4);
+  box-shadow: 0 0 18px rgba(255,255,255,0.2);
 }
+
 .avatar-wrapper img {
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  border: 3px solid #f05454;
+  border: 3px solid #ffffff;
 }
 
-/* Wipes */
 .wipe-card {
   position: relative;
   background: linear-gradient(145deg, #1c1c1c, #111);
@@ -167,51 +190,37 @@ body {
   overflow: hidden;
   transition: all 0.3s ease;
 }
+
 .wipe-card::before {
   content:"";
   position: absolute;
   inset: 0;
   background: url('https://i.imgur.com/7oVXLkB.jpg') center/cover no-repeat;
-  opacity: 0.3;
+  opacity: 0.2;
   z-index: 0;
 }
+
 .wipe-card.highlight::before {
   background-image: url('https://i.imgur.com/xxF1Xyd.jpg');
 }
 
-/* Sections */
 section {
   padding: 60px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
+
 h2 {
   font-size: 2.8rem;
-  color: #f05454;
+  color: #ffffff;
   margin-bottom: 30px;
   text-align: center;
 }
 
-/* Buttons */
-.view-profile-btn {
-  padding: 10px 22px;
-  background: #f05454;
-  color: #111;
-  border-radius: 10px;
-  border: none;
-  font-weight: 600;
-}
-.view-profile-btn:hover {
-  background: #ff7b45;
-  transform: translateY(-2px);
-  transition: 0.3s;
-}
-
-/* Footer */
 .footer-section {
   text-align: center;
   padding: 40px 20px;
-  color: #aaa;
+  color: #ccc;
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 </style>
