@@ -74,7 +74,7 @@ const clan = {
   /* Background image + dark overlay */
   background: 
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)),
-    url('https://images.unsplash.com/photo-1617631713246-97f3f7e4e8b4?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+    url('https://images4.alphacoders.com/980/thumb-1920-980708.png') center/cover no-repeat;
   background-attachment: fixed;
   background-blend-mode: overlay;
   z-index: 0;

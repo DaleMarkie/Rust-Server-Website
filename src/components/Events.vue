@@ -91,7 +91,7 @@ Prepare your gear, team up, and dominate the server together. Rust never sleeps.
 .smoke-2 { animation-duration: 60s; opacity: 0.5; }
 @keyframes smokeMove { from { transform: translate(-10%, -10%); } to { transform: translate(10%, 10%); } }
 
-.content { position: relative; z-index: 2; width: 100%; max-width: 1200px; text-align: center; }
+.content { position: relative; z-index: 2; width: 90%; max-width: 1200px; text-align: center; margin-left: -50px; }
 .events-section h2 { font-size: 3rem; color: #d47a2a; letter-spacing: 3px; }
 .divider { width: 100px; height: 3px; background: #d47a2a; margin: 20px auto 20px; }
 .description { max-width: 900px; margin: 0 auto 40px; line-height: 1.8; color: #ccc; font-size: 1.15rem; }
