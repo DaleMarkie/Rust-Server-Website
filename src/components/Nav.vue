@@ -110,9 +110,26 @@ const connectToServer = async () => {
 }
 
 .nav-logo {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #f05454;
+  font-size: 2.0rem;                  /* big and commanding */
+  font-weight: 900;                    /* solid, heavy presence */
+  color: #ffffff;                      /* pure white text */
+  text-transform: uppercase;           /* professional branding style */
+  letter-spacing: 3px;                 /* cinematic spacing */
+  text-shadow: 
+    0 2px 4px rgba(0,0,0,0.6),        /* subtle depth */
+    0 4px 8px rgba(0,0,0,0.4),        /* stronger shadow for realism */
+    0 0 12px rgba(255,255,255,0.3);   /* soft white glow */
+  font-family: 'Roboto', sans-serif;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.nav-logo:hover {
+  text-shadow: 
+    0 2px 6px rgba(0,0,0,0.7),
+    0 4px 12px rgba(0,0,0,0.5),
+    0 0 20px rgba(255,255,255,0.6);
+  transform: scale(1.08) rotate(-0.5deg); /* subtle movement */
 }
 
 .nav-links {

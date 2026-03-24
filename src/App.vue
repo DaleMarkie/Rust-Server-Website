@@ -11,10 +11,10 @@ import Faq from "./components/Faq.vue";
 
 // Clan Data
 const clan = {
-  name: "🔥 Rust x3: Rusta 🔥",
+  name: "Rust x3: Rusta",
   tagline: "Survive. Raid. Dominate.",
-  bannerImg: "https://i.ibb.co/7J7n0qpr/Rust-Header.webp",
-  description: "We are the Red Rust Raiders, a PvP-focused Rust clan. Join epic raids, survive hostile maps, and dominate your enemies in style!",
+  bannerImg: "https://i.ibb.co/7J7n0qpr/Rust-Header.webp", // Rust style banner
+  description: "We are the Red Rust Raiders, a PvP-focused Rust clan. Join epic raids and events!",
   discordLink: "#",
   members: [
     { name: "Alpha", role: "Owner", avatar: "https://i.pravatar.cc/150?img=1" },
@@ -27,147 +27,106 @@ const clan = {
     { title: "Clan Meetup", date: "2026-03-28", link: "#" }
   ],
   wipes: {
-    lastWipe: "2026-03-15T12:00:00Z",
-    nextWipe: "2026-04-01T12:00:00Z"
+    lastWipe: "2026-03-15",
+    nextWipe: "2026-04-01"
   }
 };
 </script>
 
 <template>
   <div class="clan-home">
-    <!-- Navigation -->
     <Nav :name="clan.name" :discordLink="clan.discordLink" />
 
-    <!-- Hero Banner -->
-    <section class="hero-banner">
-      <div class="hero-bg" :style="{ backgroundImage: `url(${clan.bannerImg})` }"></div>
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1>{{ clan.name }}</h1>
-        <p class="tagline">{{ clan.tagline }}</p>
-        <p class="description">{{ clan.description }}</p>
-        <a :href="clan.discordLink" class="discord-btn">Join Discord</a>
-      </div>
-    </section>
+    <Banner
+      :name="clan.name"
+      :tagline="clan.tagline"
+      :bannerImg="clan.bannerImg"
+      :discordLink="clan.discordLink"
+    />
 
-    <!-- About Section -->
     <About :description="clan.description" />
 
-    <!-- Members Section -->
     <Members :members="clan.members" />
 
-    <!-- Wipes Section -->
     <Wipes :lastWipe="clan.wipes.lastWipe" :nextWipe="clan.wipes.nextWipe" />
 
-    <!-- Events Section -->
     <Events :events="clan.events" />
 
-    <!-- FAQ Section -->
     <Faq :clanName="clan.name" />
 
-    <!-- Footer -->
     <Footer :clanName="clan.name" />
   </div>
 </template>
 
 <style scoped>
-/* Global font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
   font-family: 'Roboto', sans-serif;
   background: url('https://wallpapers.com/images/high/rust-game-iuw5qm29ai120goe.webp') center/cover no-repeat fixed;
-  color: #f05454;
+  color: #f80000;
 }
 
-/* Hero Banner */
-.hero-banner {
+/* Banner */
+.banner-section {
   position: relative;
-  width: 100%;
-  min-height: 700px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
   text-align: center;
-  color: #fff;
+  overflow: hidden;
 }
-
-.hero-bg {
+.banner-section::before {
+  content: "";
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.3);
-  z-index: 0;
+  background: url('https://i.imgur.com/Nc5MFD6.png') repeat;
+  opacity: 1.7;
 }
-
-.hero-overlay {
+.banner-content {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.9));
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
-  max-width: 900px;
-  padding: 20px;
 }
-
-.hero-content h1 {
-  font-size: 4rem;
-  letter-spacing: 4px;
-  color: #ff4e4e;
-  text-shadow: 0 0 20px #000;
+/* Upgrade the clan name in banner */
+.banner-content h1 {
+  font-size: 5rem;              /* bigger and bolder */
+  color: #ff4e4e;               /* Rusty red highlight */
+  letter-spacing: 6px;          /* extra spacing for style */
+  font-weight: 900;             /* strong bold */
+  text-shadow: 
+    0 0 8px #000,               /* black glow */
+    0 0 15px rgba(255,78,78,0.6), /* reddish glow */
+    2px 2px 2px #000;           /* subtle depth shadow */
   margin-bottom: 20px;
-  line-height: 1.2;
+  line-height: 1.1;
+  transition: all 0.3s ease;
 }
 
-.hero-content .tagline {
-  font-size: 1.8rem;
-  color: #ff7b45;
-  margin-bottom: 20px;
-  font-weight: 700;
+.banner-content h1:hover {
+  color: #ff7b45;               /* bright orange on hover */
+  text-shadow: 
+    0 0 10px #000,
+    0 0 20px rgba(255,123,69,0.8),
+    2px 2px 3px #000;
+  transform: scale(1.05);
 }
-
-.hero-content .description {
-  font-size: 1.3rem;
-  color: #eee;
-  margin-bottom: 30px;
-  line-height: 1.6;
+.banner-content p {
+  font-size: 1.5rem;
+  color: #ff0303;
+  margin: 12px 0 20px;
 }
-
 .discord-btn {
-  display: inline-block;
-  padding: 14px 40px;
-  background: #ff4e4e;
+  padding: 12px 36px;
+  background: #f05454;
   border-radius: 12px;
   font-weight: 700;
-  color: #111;
   text-decoration: none;
-  box-shadow: 0 0 15px rgba(255,78,78,0.5);
-  transition: all 0.3s ease;
+  color: #111;
 }
 .discord-btn:hover {
   background: #ff7b45;
-  transform: translateY(-3px) scale(1.05);
-}
-
-/* Sections spacing */
-section {
-  padding: 60px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Section titles */
-h2 {
-  font-size: 2.8rem;
-  color: #f05454;
-  margin-bottom: 30px;
-  text-align: center;
+  transform: translateY(-2px);
+  transition: 0.3s;
 }
 
 /* Members */
@@ -176,9 +135,8 @@ h2 {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 30px;
 }
-
 .member-card {
-  background: linear-gradient(145deg,#1c1c1c,#111);
+  background: url('https://i.imgur.com/Nc5MFD6.png') repeat, linear-gradient(145deg,#1c1c1c,#111);
   border: 1px solid #2a2a2a;
   border-radius: 16px;
   padding: 24px;
@@ -195,7 +153,43 @@ h2 {
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  border: 3px solid #ff4e4e;
+  border: 3px solid #f05454;
+}
+
+/* Wipes */
+.wipe-card {
+  position: relative;
+  background: linear-gradient(145deg, #1c1c1c, #111);
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.wipe-card::before {
+  content:"";
+  position: absolute;
+  inset: 0;
+  background: url('https://i.imgur.com/7oVXLkB.jpg') center/cover no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+.wipe-card.highlight::before {
+  background-image: url('https://i.imgur.com/xxF1Xyd.jpg');
+}
+
+/* Sections */
+section {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+h2 {
+  font-size: 2.8rem;
+  color: #f05454;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 /* Buttons */
@@ -219,13 +213,5 @@ h2 {
   padding: 40px 20px;
   color: #aaa;
   border-top: 1px solid rgba(255,255,255,0.1);
-}
-
-/* Responsive Hero */
-@media (max-width: 768px) {
-  .hero-content h1 { font-size: 2.5rem; }
-  .hero-content .tagline { font-size: 1.4rem; }
-  .hero-content .description { font-size: 1rem; }
-  .discord-btn { padding: 12px 28px; font-size: 1rem; }
 }
 </style>
