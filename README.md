@@ -18,6 +18,23 @@ This project is provided for personal and server use only.
 
 Any violation of these terms will be considered forfeit of usage rights.
 
+🖼️ Game Assets & Copyright
+
+All game-related images, artwork, and visual assets used in this project are the property of their respective owners.
+
+This includes (but is not limited to):
+
+Facepunch Studios
+Valve Corporation / Steam
+
+These assets are used for demonstration and aesthetic purposes only.
+
+❌ This project is not affiliated with or endorsed by any of the above entities
+❌ No ownership of original game assets is claimed
+✅ All rights remain with their respective copyright holders
+
+If you are a rights holder and would like content removed or credited differently, please make contact.
+
 ## 🔥 Features
 
 - ⚙️ Vue 3 + `<script setup>` + TypeScript
