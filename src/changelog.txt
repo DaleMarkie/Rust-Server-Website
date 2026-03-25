@@ -1,0 +1,2 @@
+- user can click on logo text to take them back to home. 
+- 
