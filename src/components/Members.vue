@@ -2,7 +2,7 @@
 defineProps<{
   members: {
     name: string;
-    role: string; // "Owner" | "Admin" | "Mod" | "Support"
+    role: string;
     avatar: string;
   }[];
 }>();
@@ -17,6 +17,7 @@ an unforgettable experience.
 
 <template>
   <section id="members" class="members-section">
+    
     <!-- Background -->
     <div class="bg"></div>
     <div class="overlay"></div>
@@ -28,21 +29,36 @@ an unforgettable experience.
 
     <!-- Content -->
     <div class="content">
-      <h2>Our Team</h2>
+
+      <!-- 🔥 Animated Title -->
+      <h2 class="section-title">
+        <span v-for="(char, i) in 'Our Team'.split('')" :key="i" :style="{ animationDelay: i * 0.05 + 's' }">
+          {{ char }}
+        </span>
+      </h2>
+
       <div class="divider"></div>
+
       <p class="section-description" v-html="sectionDescription"></p>
 
       <div class="members-grid">
-        <div v-for="member in members" :key="member.name" class="member-card">
-          
+        <div
+          v-for="(member, i) in members"
+          :key="member.name"
+          class="member-card"
+          :style="{ animationDelay: (i * 0.1) + 's' }"
+        >
+
           <!-- Avatar -->
           <div class="avatar-wrapper" :class="member.role.toLowerCase()">
             <img :src="member.avatar" :alt="member.name" />
             <span class="status-dot"></span>
+            <div class="avatar-glow"></div>
           </div>
 
           <!-- Info -->
           <h3>{{ member.name }}</h3>
+
           <p :class="['role-badge', member.role.toLowerCase()]">
             {{ member.role }}
           </p>
@@ -66,13 +82,20 @@ an unforgettable experience.
   color: #ddd;
 }
 
-/* Background */
+/* Background (animated slightly now) */
 .bg {
   position: absolute;
   width: 110%;
   height: 110%;
   background: url('https://images.unsplash.com/photo-1625723427391-164c022d6d3a?auto=format&fit=crop&w=1950&q=80') center/cover;
   filter: brightness(0.25) contrast(1.4);
+  animation: bgMove 30s linear infinite;
+}
+
+@keyframes bgMove {
+  0% { transform: scale(1) translate(0,0); }
+  50% { transform: scale(1.05) translate(10px,5px); }
+  100% { transform: scale(1) translate(0,0); }
 }
 
 /* Overlay */
@@ -115,26 +138,27 @@ an unforgettable experience.
 .content {
   position: relative;
   z-index: 2;
-  width: 100%;
+  width: 80%;
   max-width: 1200px;
   text-align: center;
 }
 
-/* Title */
-.members-section h2 {
-  font-size: 3rem;
+/* 🔥 Title Animation */
+.section-title span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: titleReveal 0.6s forwards, flicker 3s infinite;
   color: #d47a2a;
+  font-size: 3rem;
   letter-spacing: 3px;
 }
 
-/* Section description */
-.section-description {
-  max-width: 800px;
-  margin: 0 auto 40px;
-  color: #ffffff;
-  font-size: 1.1rem;
-  line-height: 1.7;
-  text-align: center;
+@keyframes titleReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Divider */
@@ -145,6 +169,15 @@ an unforgettable experience.
   margin: 20px auto 40px;
 }
 
+/* Description */
+.section-description {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  color: #ffffff;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
 /* Grid */
 .members-grid {
   display: grid;
@@ -152,46 +185,55 @@ an unforgettable experience.
   gap: 25px;
 }
 
-/* Card */
+/* 🔥 Card upgrade */
 .member-card {
   background: linear-gradient(145deg, #1c1c1c, #111);
   border: 1px solid #2a2a2a;
-  padding: 20px;
-  transition: all 0.2s ease;
+  padding: 25px;
+  transition: all 0.3s ease;
+  animation: fadeUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .member-card:hover {
   border-color: #d47a2a;
-  transform: translateY(-4px);
-  box-shadow: 0 0 20px rgba(212,122,42,0.2);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 0 25px rgba(212,122,42,0.3);
 }
 
 /* Avatar */
 .avatar-wrapper {
   position: relative;
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .avatar-wrapper img {
   width: 100px;
   height: 100px;
-  border: 2px solid #333;
   border-radius: 50%;
+  border: 2px solid #333;
 }
 
-/* Role highlights */
-.avatar-wrapper.owner img {
-  border-color: #d47a2a;
+/* Glow ring */
+.avatar-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(212,122,42,0.4);
+  opacity: 0;
+  transition: 0.3s;
 }
-.avatar-wrapper.admin img {
-  border-color: #b86b2c;
-}
-.avatar-wrapper.mod img {
-  border-color: #7289da;
-}
-.avatar-wrapper.support img {
-  border-color: #666;
+
+.member-card:hover .avatar-glow {
+  opacity: 1;
 }
 
 /* Status dot */
@@ -211,38 +253,25 @@ an unforgettable experience.
   color: #fff;
 }
 
-/* Role */
+/* 🔥 Role badge improved */
 .role-badge {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   letter-spacing: 2px;
-  color: #888;
-  margin-bottom: 10px;
-}
-.role-badge.owner { color: #d47a2a; }
-.role-badge.admin { color: #b86b2c; }
-.role-badge.mod { color: #7289da; }
-.role-badge.support { color: #aaa; }
-
-/* Button */
-.view-profile-btn {
-  padding: 10px 20px;
-  background: transparent;
+  padding: 4px 10px;
   border: 1px solid #444;
-  color: #aaa;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  display: inline-block;
+  margin-top: 5px;
 }
 
-.view-profile-btn:hover {
-  border-color: #d47a2a;
-  color: #d47a2a;
-}
+/* Role colors */
+.role-badge.owner { color: #d47a2a; border-color: #d47a2a; }
+.role-badge.admin { color: #b86b2c; border-color: #b86b2c; }
+.role-badge.mod { color: #7289da; border-color: #7289da; }
+.role-badge.support { color: #aaa; border-color: #555; }
 
 /* Mobile */
 @media (max-width: 768px) {
-  .members-section h2 {
+  .section-title span {
     font-size: 2rem;
   }
 }

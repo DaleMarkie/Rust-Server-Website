@@ -91,7 +91,7 @@ const filteredFaqs = computed(() => {
 <style scoped>
 .faq-section {
   padding: 60px 20px;
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
   color: #eee;
   font-family: 'Roboto', sans-serif;

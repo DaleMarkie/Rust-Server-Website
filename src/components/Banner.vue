@@ -14,8 +14,8 @@ const serverInfo = {
 };
 
 // Banner texts
-const bannerTitle = "Welcome To";
-const bannerTagline = "x3|Trio|Monthly";
+const bannerTitle = "x3|Trio|Monthly";
+const bannerTagline = "RUSTA SERVER";
 const bannerDescription = "Join the Red Rust Raiders, a hardcore PvP Rust clan. Dominate raids, control the map, and survive with the best!";
 const discordLink = "#";
 
@@ -75,7 +75,18 @@ const copyCommand = () => {
 
     <!-- Content -->
     <div class="banner-content">
-      <h1 class="banner-title">{{ bannerTitle }}</h1>
+
+      <!-- 🔥 ONLY CHANGE IS HERE -->
+      <h1 class="banner-title">
+        <span
+          v-for="(char, i) in bannerTitle.split('')"
+          :key="i"
+          :style="{ animationDelay: (i * 0.05) + 's' }"
+        >
+          {{ char }}
+        </span>
+      </h1>
+
       <div class="divider"></div>
       <p class="banner-tagline">{{ bannerTagline }}</p>
       <p class="banner-description">{{ bannerDescription }}</p>
@@ -175,6 +186,29 @@ const copyCommand = () => {
 /* Content */
 .banner-content { position: relative; text-align: center; z-index: 5; max-width: 900px; }
 .banner-title { font-size: 4.5rem; color: #d47a2a; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 3px 10px rgba(0,0,0,0.9); }
+
+/* 🔥 NEW ANIMATION ONLY */
+.banner-title span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px) scale(0.9);
+  animation: titleReveal 0.6s forwards, titleFlicker 3s infinite;
+}
+
+@keyframes titleReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes titleFlicker {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.85; }
+  50% { opacity: 0.6; }
+  55% { opacity: 0.9; }
+}
+
 .divider { width: 120px; height: 3px; background: #d47a2a; margin: 20px auto; }
 .banner-tagline { font-size: 1.4rem; color: #bbb; margin-bottom: 15px; }
 .banner-description { font-size: 1.1rem; color: #ccc; max-width: 700px; margin: 0 auto; line-height: 1.6; }

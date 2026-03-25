@@ -16,6 +16,8 @@ defineProps<{
       <li><a href="/members">Members</a></li>
       <li><a href="/wipes">Wipes</a></li>
       <li><a href="/events">Events</a></li>
+      <li><a href="/events">Support</a></li>
+      <li><a href="/contact">Contact</a></li>
 
       <!-- LOGIN BUTTON -->
       <li>
@@ -36,14 +38,15 @@ defineProps<{
   display: flex;
   justify-content: space-between; /* SAME AS YOUR ORIGINAL BEHAVIOUR */
   align-items: center;
-  padding: 12px 30px;
+  padding: 4px 30px;
   z-index: 9999;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-top: 0px;
 }
 
 /* stop page hiding under nav */
 :global(body) {
-  padding-top: 80px;
+  padding-top: 30px;
 }
 
 /* LOGO */

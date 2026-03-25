@@ -9,6 +9,7 @@ import Wipes from "./components/Wipes.vue";
 import Events from "./components/Events.vue";
 import Faq from "./components/Faq.vue";
 import Gallary from "./components/Gallary.vue";
+import Login from "./components/Login.vue";
 
 const route = useRoute();
 

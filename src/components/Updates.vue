@@ -71,7 +71,7 @@ const filteredUpdates = computed(() => {
 
 <style scoped>
 .timeline-section {
-  max-width: 1000px;
+  max-width: 80px;
   margin: 0 auto;
   padding: 60px 20px;
   font-family: 'Inter', sans-serif;

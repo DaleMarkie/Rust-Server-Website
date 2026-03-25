@@ -73,7 +73,7 @@ const images = [
 
 <style scoped>
 .gallery {
-  width: 100%;
+  width: 80%;
   overflow: hidden;
   text-align: center;
 }
