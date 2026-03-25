@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useRoute } from "vue-router";
 import Footer from "./components/Footer.vue";
 import About from "./components/About.vue";
 import Banner from "./components/Banner.vue";
@@ -9,6 +9,8 @@ import Wipes from "./components/Wipes.vue";
 import Events from "./components/Events.vue";
 import Faq from "./components/Faq.vue";
 import Gallary from "./components/Gallary.vue";
+
+const route = useRoute();
 
 // Clan Data
 const clan = {
@@ -36,28 +38,38 @@ const clan = {
 
 <template>
   <div class="clan-home">
+
     <Nav :name="clan.name" :discordLink="clan.discordLink" />
 
-    <Banner
-      :name="clan.name"
-      :tagline="clan.tagline"
-      :bannerImg="clan.bannerImg"
-      :discordLink="clan.discordLink"
-    />
+    <!-- 🔥 EVENTS PAGE -->
+    <template v-if="route.path === '/events'">
+      <Events />
+    </template>
 
-    <About :description="clan.description" />
+    <!-- 🔥 HOME PAGE -->
+    <template v-else>
+      <Banner
+        :name="clan.name"
+        :tagline="clan.tagline"
+        :bannerImg="clan.bannerImg"
+        :discordLink="clan.discordLink"
+      />
 
-    <Members :members="clan.members" />
+      <About :description="clan.description" />
 
-    <Wipes :lastWipe="clan.wipes.lastWipe" :nextWipe="clan.wipes.nextWipe" />
+      <Members :members="clan.members" />
 
-    <Events :events="clan.events" />
+      <Wipes :lastWipe="clan.wipes.lastWipe" :nextWipe="clan.wipes.nextWipe" />
 
-    <Gallary :clanName="clan.Gallary" />
+      <Events :events="clan.events" />
 
-    <Faq :clanName="clan.name" />
+      <!-- FIXED BUG HERE -->
+      <Gallary :clanName="clan.name" />
 
-    <Footer :clanName="clan.name" />
+      <Faq :clanName="clan.name" />
+
+      <Footer :clanName="clan.name" />
+    </template>
 
   </div>
 </template>
